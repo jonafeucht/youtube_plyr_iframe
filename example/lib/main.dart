@@ -27,8 +27,8 @@ class YoutubeApp extends StatelessWidget {
     return MaterialApp(
       title: 'Youtube Plyr Demo',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        iconTheme: const IconThemeData(color: Colors.deepPurpleAccent),
+        primarySwatch: Colors.blue,
+        iconTheme: const IconThemeData(color: Colors.blue),
       ),
       debugShowCheckedModeBanner: false,
       home: YoutubeAppDemo(),
