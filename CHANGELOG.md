@@ -1,6 +1,11 @@
+## 1.3.2+1
+- Fix homepage and repo page
+
+## 1.3.2
+- Fixes desktop mode on iPad + nullsafety
+
 ## 1.3.0+1
 - Fixes videos opening up in browser instead of inline on iOS.
-- Fixes desktop mode on iPad + nullsafety
 
 ## 1.2.0+2
 - Added `YoutubePlayerParams.privacyEnhanced` flag.

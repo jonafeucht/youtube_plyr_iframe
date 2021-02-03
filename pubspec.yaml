@@ -1,8 +1,8 @@
 name: youtube_plyr_iframe
-description: Clone of Youtube Player Iframe. Supports web & mobile platforms.
-version: 1.3.0+1
-repository: https://github.com/jonatadashi/youtube_player_iframe
-homepage: https://github.com/jonatadashi/youtube_player_iframe
+description: Fork of Youtube Player Iframe. Supports web & mobile platforms.
+version: 1.3.2+1
+repository: https://github.com/jonatadashi/youtube_plyr_iframe
+homepage: https://github.com/jonatadashi/youtube_plyr_iframe
 
 environment:
   sdk: '>=2.7.0 <3.0.0'
