@@ -19,7 +19,7 @@ Supported Platforms:
 - **iOS**
 - **Web**
 
-![LIVESTREAM](livestream.png) ![YOUTUBE PLAYER](youtube.png)
+<img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0">
 
 [Click here for WEB DEMO](https://sarbagyastha.github.io/youtube_player_flutter)
 
