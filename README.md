@@ -1,6 +1,6 @@
 # Youtube Plyr IFrame
 
-This is a clone of [youtube_player_iframe](https://github.com/sarbagyastha/youtube_player_flutter/tree/master/packages/youtube_player_iframe)
+This is a fork of [youtube_player_iframe](https://github.com/sarbagyastha/youtube_player_flutter/tree/master/packages/youtube_player_iframe) which fixes some game breaking things.
 
 Flutter plugin for playing or streaming YouTube videos inline using the official [**iFrame Player API**](https://developers.google.com/youtube/iframe_api_reference).
 The package exposes almost all the API provided by **iFrame Player API**. So, it's 100% customizable.
