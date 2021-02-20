@@ -1,4 +1,10 @@
-# 1.3.3
+## 1.3.5
+- Minor fix
+
+## 1.3.4
+- Added migration guide
+
+## 1.3.3
 - Fix "type 'int' is not a subtype of type 'double' in type cast"
 - Fix "The Flutter constraint should not have an upper bound."
 

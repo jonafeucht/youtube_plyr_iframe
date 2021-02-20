@@ -17,6 +17,12 @@ Supported Platforms:
 
 [Click here for WEB DEMO](https://sarbagyastha.github.io/youtube_player_flutter)
 
+## Migrating from [youtube_player_iframe](https://pub.dev/packages/youtube_player_iframe)
+1. Replace package in `pubspec.yaml` file. 
+2. Replace `'package:youtube_player_iframe/youtube_player_iframe.dart';` with `'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';`.
+
+For more details see: [https://pub.dev/packages/youtube_plyr_iframe/install](https://pub.dev/packages/youtube_plyr_iframe/install)
+
 ## Salient Features
 * Inline Playback
 * Supports captions
