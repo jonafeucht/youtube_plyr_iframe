@@ -17,6 +17,9 @@ Supported Platforms:
 
 [Click here for WEB DEMO](https://sarbagyastha.github.io/youtube_player_flutter)
 
+## Example App
+[<img src="https://itsallwidgets.com/images/google.png" height="70px">](https://play.google.com/store/apps/details?id=space.starhelix.lore.christianity)[<img src="https://chroniken.starhelix.space/dist/images/applestore.svg" height="70px">](https://apps.apple.com/app/id1484833082#?platform=iphone)
+
 ## Migrating from [youtube_player_iframe](https://pub.dev/packages/youtube_player_iframe)
 1. Replace package in `pubspec.yaml` file. 
 2. Replace `'package:youtube_player_iframe/youtube_player_iframe.dart';` with `'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';`.

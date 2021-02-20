@@ -1,3 +1,6 @@
+## 1.3.6+1
+- Added example app
+
 ## 1.3.5
 - Minor fix
 
