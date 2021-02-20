@@ -1,3 +1,7 @@
+# 1.3.3
+- Fix "type 'int' is not a subtype of type 'double' in type cast"
+- Fix "The Flutter constraint should not have an upper bound."
+
 ## 1.3.2+1
 - Fix homepage and repo page
 
