@@ -1,12 +1,8 @@
-// Copyright 2020 Sarbagya Dhaubanjar. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2021 Jona T. Feucht. All rights reserved.
 
-import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:youtube_player_iframe_example/pages/oldDemo.dart';
+import 'package:youtube_player_iframe_example/pages/thumbnailDemo.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 import 'widgets/meta_data_section.dart';
@@ -57,6 +53,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
           "FTQbiNvZqaY",
           "iYKXdt0LRs8",
         ],
+
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
         showFullscreenButton: true,
@@ -99,37 +96,104 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
 
   @override
   Widget build(BuildContext context) {
-    const player = YoutubePlayerIFrame();
+    // return object of type Dialog
     return YoutubePlayerControllerProvider(
       // Passing controller to widgets below.
       controller: _controller,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Youtube Plyr Demo'),
-        ),
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            if (kIsWeb && constraints.maxWidth > 800) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Expanded(child: player),
-                  const SizedBox(
-                    width: 500,
-                    child: SingleChildScrollView(
-                      child: Controls(),
+        body: SingleChildScrollView(
+          child: Container(
+            child: new Center(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: new Column(
+                  // center the children
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          child: Text("Old Demo"),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => OldDemo()),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                          child: Text("Thumbnail Demo"),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ThumbnailDemo()),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              );
-            }
-            return ListView(
-              children: [
-                player,
-                const Controls(),
-              ],
-            );
-          },
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          _showDialog();
+                        },
+                        child: Card(
+                          child: Container(
+                              height: 300,
+                              width: MediaQuery.of(context).size.width / 2,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                image: new DecorationImage(
+                                  colorFilter: new ColorFilter.mode(
+                                      Colors.black.withOpacity(0.7),
+                                      BlendMode.dstATop),
+                                  image: NetworkImage(
+                                    YoutubePlayerController.getThumbnail(
+                                        videoId: "F1B9Fk_SgI0",
+                                        quality: ThumbnailQuality.max,
+                                        webp: false),
+                                  ),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.brown,
+                                    offset: Offset(0.0, 0.0),
+                                    blurRadius: 0.0,
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  alignment: Alignment.center,
+                                  children: <Widget>[
+                                    Center(
+                                      child: Icon(
+                                        Icons.play_circle_filled,
+                                        color: Colors.white,
+                                        size: 55.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Controls(),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -139,6 +203,34 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
   void dispose() {
     _controller.close();
     super.dispose();
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final player = YoutubePlayerIFrame();
+        // return object of type Dialog
+        return YoutubePlayerControllerProvider(
+          // Passing controller to widgets below.
+          controller: _controller,
+          child: AlertDialog(
+            title: new Text("Demo Video"),
+            content: player,
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new TextButton(
+                child: new Text("Close"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
