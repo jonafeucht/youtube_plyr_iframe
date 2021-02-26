@@ -32,7 +32,7 @@ class PlayerStateSection extends StatelessWidget {
     );
   }
 
-  Color _getStateColor(PlayerState state) {
+  Color? _getStateColor(PlayerState state) {
     switch (state) {
       case PlayerState.unknown:
         return Colors.grey[700];

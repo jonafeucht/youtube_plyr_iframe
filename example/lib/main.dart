@@ -51,69 +51,70 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            child: new Center(
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: new Column(
-                  // center the children
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          child: Text("Old Demo"),
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => OldDemo()),
-                          ),
+      appBar: AppBar(
+        title: Text("Demo"),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          child: new Center(
+            child: Padding(
+              padding: EdgeInsets.all(15),
+              child: new Column(
+                // center the children
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        child: Text("Old Demo"),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => OldDemo()),
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        ElevatedButton(
-                          child: Text("Thumbnail Demo"),
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ThumbnailDemo()),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text("Livestream"),
-                    ytPlayer("5qap5aO4i9A"),
-                    Divider(),
-                    Text("Single Player"),
-                    ytPlayer("F1B9Fk_SgI0"),
-                    Divider(),
-                    Text("From String"),
-                    ytPlayer(videoID),
-                    Divider(),
-                    Text("List View"),
-                    for (var i in players)
-                      ytPlayer(
-                        i["videoID"],
                       ),
-                    Divider(),
-                    Text("Row List"),
-                    Wrap(
-                      spacing: 8.0,
-                      runSpacing: 4.0,
-                      direction: Axis.horizontal,
-                      children: [
-                        ytPlayer("TyimCGEkiUc"),
-                        Text(
-                          "Hello World",
-                          style: TextStyle(fontSize: 20),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      ElevatedButton(
+                        child: Text("Thumbnail Demo"),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ThumbnailDemo()),
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  Text("Livestream"),
+                  ytPlayer("5qap5aO4i9A"),
+                  Divider(),
+                  Text("Single Player"),
+                  ytPlayer("F1B9Fk_SgI0"),
+                  Divider(),
+                  Text("From String"),
+                  ytPlayer(videoID),
+                  Divider(),
+                  Text("List View"),
+                  for (var i in players)
+                    ytPlayer(
+                      i["videoID"],
                     ),
-                  ],
-                ),
+                  Divider(),
+                  Text("Row List"),
+                  Wrap(
+                    spacing: 8.0,
+                    runSpacing: 4.0,
+                    direction: Axis.horizontal,
+                    children: [
+                      ytPlayer("TyimCGEkiUc"),
+                      Text(
+                        "Hello World",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
@@ -162,6 +163,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
@@ -178,6 +180,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
@@ -209,7 +212,7 @@ class YoutubeViewer extends StatefulWidget {
 }
 
 class _YoutubeViewerState extends State<YoutubeViewer> {
-  YoutubePlayerController _controller;
+  late YoutubePlayerController _controller;
 
   @override
   void initState() {
@@ -319,6 +322,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: widget.videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
@@ -335,6 +339,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: widget.videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,

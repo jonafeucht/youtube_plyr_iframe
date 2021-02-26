@@ -30,9 +30,9 @@ class RawYoutubePlayer extends StatefulWidget {
 
   /// Creates a [MobileYoutubePlayer] widget.
   const RawYoutubePlayer({
-    Key key,
-    this.controller,
-    this.gestureRecognizers,
+    Key? key,
+    required this.controller,
+    required this.gestureRecognizers,
   }) : super(key: key);
 
   @override
@@ -40,8 +40,8 @@ class RawYoutubePlayer extends StatefulWidget {
 }
 
 class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
-  YoutubePlayerController controller;
-  Completer<IFrameElement> _iFrame;
+  late YoutubePlayerController controller;
+  late Completer<IFrameElement> _iFrame;
 
   @override
   void initState() {

@@ -25,33 +25,33 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
     implements Sink<YoutubePlayerValue> {
   /// Creates [YoutubePlayerController].
   YoutubePlayerController({
-    @required this.initialVideoId,
+    this.initialVideoId,
     this.params = const YoutubePlayerParams(),
   }) {
     invokeJavascript = (_) async {};
   }
 
   /// The Youtube video id for initial video to be loaded.
-  final String initialVideoId;
+  final String? initialVideoId;
 
   /// Defines default parameters for the player.
-  final YoutubePlayerParams params;
+  final YoutubePlayerParams? params;
 
   /// Can be used to invokes javascript function.
   ///
   /// Ensure that the player is ready before using this.
-  Future<void> Function(String function) invokeJavascript;
+  Future<void> Function(String function)? invokeJavascript;
 
   /// Called when player enters fullscreen.
-  VoidCallback onEnterFullscreen;
+  VoidCallback? onEnterFullscreen;
 
   /// Called when player exits fullscreen.
-  VoidCallback onExitFullscreen;
+  VoidCallback? onExitFullscreen;
 
   final StreamController<YoutubePlayerValue> _controller =
       StreamController.broadcast();
 
-  YoutubePlayerValue _value = YoutubePlayerValue();
+  YoutubePlayerValue _value = YoutubePlayerValue(playbackQuality: null);
 
   /// The [YoutubePlayerValue].
   YoutubePlayerValue get value => _value;
@@ -65,15 +65,15 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   /// Listen to updates in [YoutubePlayerController].
   @override
   StreamSubscription<YoutubePlayerValue> listen(
-    void Function(YoutubePlayerValue event) onData, {
-    Function onError,
-    void Function() onDone,
-    bool cancelOnError,
+    void Function(YoutubePlayerValue event)? onData, {
+    Function? onError,
+    void Function()? onDone,
+    bool? cancelOnError,
   }) {
     return _controller.stream.listen(
       (value) {
         _value = value;
-        onData(value);
+        onData!(value);
       },
       onError: onError,
       onDone: onDone,
@@ -92,41 +92,41 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   /// The final player state after this function executes will be [PlayerState.playing].
   ///
   /// Note: A playback only counts toward a video's official view count if it is initiated via a native play button in the player.
-  void play() => invokeJavascript('play()');
+  void play() => invokeJavascript!('play()');
 
   /// Pauses the currently playing video.
   ///
   /// The final player state after this function executes will be [PlayerState.paused] unless the player is in the [PlayerState.ended] state when the function is called,
   /// in which case the player state will not change.
-  void pause() => invokeJavascript('pause()');
+  void pause() => invokeJavascript!('pause()');
 
   /// Stops and cancels loading of the current video.
   ///
   /// This function should be reserved for rare situations when you know that the user will not be watching additional video in the player.
   /// If your intent is to pause the video, you should just call the [YoutubePlayerController.pause] function.
   /// If you want to change the video that the player is playing, you can call one of the queueing functions without calling [YoutubePlayerController.stop] first.
-  void stop() => invokeJavascript('stop()');
+  void stop() => invokeJavascript!('stop()');
 
   /// This function loads and plays the next video in the playlist.
   ///
   /// If called while the last video in the playlist is being watched, and the playlist is set to play continuously (i.e. [YoutubePlayerParams.loop] is true),
   /// then the player will load and play the first video in the list, otherwise,
   /// the playback will end.
-  void nextVideo() => invokeJavascript('next()');
+  void nextVideo() => invokeJavascript!('next()');
 
   /// This function loads and plays the previous video in the playlist.
   ///
   /// If called while the last video in the playlist is being watched, and the playlist is set to play continuously (i.e. [YoutubePlayerParams.loop] is true),
   /// then the player will load and play the first video in the list, otherwise,
   /// the playback will end.
-  void previousVideo() => invokeJavascript('previous()');
+  void previousVideo() => invokeJavascript!('previous()');
 
   /// This function loads and plays the specified video in the playlist.
   ///
   /// The [index] parameter specifies the index of the video that you want to play in the playlist.
   /// The parameter uses a zero-based index, so a value of 0 identifies the first video in the list.
   /// If you have shuffled the playlist, this function will play the video at the specified position in the shuffled playlist.
-  void playVideoAt(int index) => invokeJavascript('playVideoAt($index)');
+  void playVideoAt(int index) => invokeJavascript!('playVideoAt($index)');
 
   /// This function loads and plays the specified video.
   ///
@@ -135,8 +135,8 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// [startAt] & [endAt] parameter accepts a [Duration].
   /// If specified, then the video will (start from the closest keyframe to the specified time / end at the specified time).
-  void load(String videoId,
-      {Duration startAt = Duration.zero, Duration endAt}) {
+  void load(String? videoId,
+      {Duration startAt = Duration.zero, Duration? endAt}) {
     var loadParams = 'videoId:"$videoId",startSeconds:${startAt.inSeconds}';
     if (endAt != null && endAt > startAt) {
       loadParams += ',endSeconds:${endAt.inSeconds}';
@@ -145,7 +145,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
     if (_value.hasError) {
       pause();
     } else {
-      invokeJavascript('loadById({$loadParams})');
+      invokeJavascript!('loadById({$loadParams})');
     }
   }
 
@@ -157,7 +157,8 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// [startAt] & [endAt] parameter accepts a [Duration].
   /// If specified, then the video will (start from the closest keyframe to the specified time / end at the specified time).
-  void cue(String videoId, {Duration startAt = Duration.zero, Duration endAt}) {
+  void cue(String videoId,
+      {Duration startAt = Duration.zero, Duration? endAt}) {
     var cueParams = 'videoId:"$videoId",startSeconds:${startAt.inSeconds}';
     if (endAt != null && endAt > startAt) {
       cueParams += ',endSeconds:${endAt.inSeconds}';
@@ -166,7 +167,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
     if (_value.hasError) {
       pause();
     } else {
-      invokeJavascript('cueById({$cueParams})');
+      invokeJavascript!('cueById({$cueParams})');
     }
   }
 
@@ -187,7 +188,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   }) {
     var loadParams =
         'list:"$list",listType:"$listType",index:$index,startSeconds:$startAt';
-    invokeJavascript('loadPlaylist({$loadParams})');
+    invokeJavascript!('loadPlaylist({$loadParams})');
   }
 
   /// Queues the specified list of videos.
@@ -208,11 +209,11 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   }) {
     var cueParams =
         'list:"$list",listType:"$listType",index:$index,startSeconds:$startAt';
-    invokeJavascript('cuePlaylist({$cueParams})');
+    invokeJavascript!('cuePlaylist({$cueParams})');
   }
 
-  void _updateId(String id) {
-    if (id?.length != 11) {
+  void _updateId(String? id) {
+    if (id!.length != 11) {
       add(_value.copyWith(error: YoutubeError.invalidParam));
     } else {
       add(_value.copyWith(error: YoutubeError.none, hasPlayed: false));
@@ -220,15 +221,15 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   }
 
   /// Mutes the player.
-  void mute() => invokeJavascript('mute()');
+  void mute() => invokeJavascript!('mute()');
 
   /// Unmutes the player.
-  void unMute() => invokeJavascript('unMute()');
+  void unMute() => invokeJavascript!('unMute()');
 
   /// Sets the volume of player.
   /// Max = 100 , Min = 0
   void setVolume(int volume) => volume >= 0 && volume <= 100
-      ? invokeJavascript('setVolume($volume)')
+      ? invokeJavascript!('setVolume($volume)')
       : throw Exception("Volume should be between 0 and 100");
 
   /// Seeks to a specified time in the video.
@@ -241,42 +242,42 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// Default allowSeekAhead = true
   void seekTo(Duration position, {bool allowSeekAhead = true}) {
-    invokeJavascript('seekTo(${position.inSeconds},$allowSeekAhead)');
+    invokeJavascript!('seekTo(${position.inSeconds},$allowSeekAhead)');
     play();
     add(_value.copyWith(position: position));
   }
 
   /// Sets the size in pixels of the player.
   void setSize(Size size) =>
-      invokeJavascript('setSize(${size.width}, ${size.height})');
+      invokeJavascript!('setSize(${size.width}, ${size.height})');
 
   /// Sets the playback speed for the video.
   void setPlaybackRate(double rate) =>
-      invokeJavascript('setPlaybackRate($rate)');
+      invokeJavascript!('setPlaybackRate($rate)');
 
   /// This function indicates whether the video player should continuously play a playlist
   /// or if it should stop playing after the last video in the playlist ends.
   ///
   /// The default behavior is that playlists do not loop.
   // ignore: avoid_positional_boolean_parameters
-  void setLoop(bool loop) => invokeJavascript('setLoop($loop)');
+  void setLoop(bool loop) => invokeJavascript!('setLoop($loop)');
 
   /// This function indicates whether a playlist's videos should be shuffled so that they play back in an order different from the one that the playlist creator designated.
   ///
   /// If you shuffle a playlist after it has already started playing, the list will be reordered while the video that is playing continues to play.
   /// The next video that plays will then be selected based on the reordered list.
   // ignore: avoid_positional_boolean_parameters
-  void setShuffle(bool shuffle) => invokeJavascript('setShuffle($shuffle)');
+  void setShuffle(bool shuffle) => invokeJavascript!('setShuffle($shuffle)');
 
   /// Hides top menu i.e. title, playlist, share icon shown at top of the player.
   ///
   /// Might violates Youtube's TOS. Use at your own risk.
-  void hideTopMenu() => invokeJavascript('hideTopMenu()');
+  void hideTopMenu() => invokeJavascript!('hideTopMenu()');
 
   /// Hides pause overlay i.e. related videos shown when player is paused.
   ///
   /// Might violates Youtube's TOS. Use at your own risk.
-  void hidePauseOverlay() => invokeJavascript('hidePauseOverlay()');
+  void hidePauseOverlay() => invokeJavascript!('hidePauseOverlay()');
 
   /// MetaData for the currently loaded or cued video.
   YoutubeMetaData get metadata => _value.metaData;
@@ -298,21 +299,20 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   /// Converts fully qualified YouTube Url to video id.
   ///
   /// If videoId is passed as url then no conversion is done.
-  static String convertUrlToId(String url, {bool trimWhitespaces = true}) {
+  static String? convertUrlToId(String? url, {bool? trimWhitespaces = true}) {
     assert(url?.isNotEmpty ?? false, 'Url cannot be empty');
-    if (!url.contains("http") && (url.length == 11)) return url;
-    if (trimWhitespaces) url = url.trim();
+    if (url!.contains("http") && (url.length == 11)) return url;
+    if (trimWhitespaces!) url = url.trim();
 
     for (var regex in [
       r'^https:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([_\-a-zA-Z0-9]{11}).*$',
       r'^https:\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11}).*$',
       r'^https:\/\/youtu\.be\/([_\-a-zA-Z0-9]{11}).*$',
     ]) {
-      Match match = RegExp(regex).firstMatch(url);
-      if (match != null && match.groupCount >= 1) return match.group(1);
+      RegExpMatch? match = RegExp(regex).firstMatch(url)!;
+      if (match.groupCount >= 1) return match.group(1);
     }
-
-    return null;
+    return url;
   }
 
   /// Grabs YouTube video's thumbnail for provided video id.
@@ -320,7 +320,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   /// If [webp] is true, webp version of the thumbnail will be retrieved,
   /// Otherwise a JPG thumbnail.
   static String getThumbnail({
-    @required String videoId,
+    required String videoId,
     String quality = ThumbnailQuality.standard,
     bool webp = true,
   }) {

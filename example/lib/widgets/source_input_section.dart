@@ -12,8 +12,8 @@ class SourceInputSection extends StatefulWidget {
 }
 
 class _SourceInputSectionState extends State<SourceInputSection> {
-  TextEditingController _textController;
-  String _playlistType;
+  TextEditingController? _textController;
+  String? _playlistType;
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                 ),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
-                  onPressed: () => _textController.clear(),
+                  onPressed: () => _textController!.clear(),
                 ),
               ),
             ),
@@ -88,13 +88,13 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                 _Button(
                   action: 'LOAD',
                   onTap: () {
-                    context.ytController.load(_cleanId(_textController.text));
+                    context.ytController!.load(_cleanId(_textController!.text));
                   },
                 ),
                 _Button(
                   action: 'CUE',
                   onTap: () {
-                    context.ytController.cue(_cleanId(_textController.text));
+                    context.ytController!.cue(_cleanId(_textController!.text)!);
                   },
                 ),
                 _Button(
@@ -102,9 +102,9 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                   onTap: _playlistType == null
                       ? null
                       : () {
-                          context.ytController.loadPlaylist(
-                            _textController.text,
-                            listType: _playlistType,
+                          context.ytController!.loadPlaylist(
+                            _textController!.text,
+                            listType: _playlistType!,
                           );
                         },
                 ),
@@ -113,9 +113,9 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                   onTap: _playlistType == null
                       ? null
                       : () {
-                          context.ytController.cuePlaylist(
-                            _textController.text,
-                            listType: _playlistType,
+                          context.ytController!.cuePlaylist(
+                            _textController!.text,
+                            listType: _playlistType!,
                           );
                         },
                 ),
@@ -127,7 +127,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
     );
   }
 
-  String get _helperText {
+  String? get _helperText {
     switch (_playlistType) {
       case PlaylistType.search:
         return '"avengers trailer", "nepali songs"';
@@ -151,7 +151,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
     return 'Enter youtube \<video id\> or \<link\>';
   }
 
-  String _cleanId(String source) {
+  String? _cleanId(String source) {
     if (source.startsWith('http://') || source.startsWith('https://')) {
       return YoutubePlayerController.convertUrlToId(source);
     } else if (source.length != 11) {
@@ -183,29 +183,30 @@ class _SourceInputSectionState extends State<SourceInputSection> {
 
   @override
   void dispose() {
-    _textController?.dispose();
+    _textController!.dispose();
     super.dispose();
   }
 }
 
 class _Button extends StatelessWidget {
-  final VoidCallback onTap;
-  final String action;
+  final VoidCallback? onTap;
+  final String? action;
 
   const _Button({
-    Key key,
-    @required this.onTap,
-    @required this.action,
+    Key? key,
+    this.onTap,
+    this.action,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       color: Theme.of(context).primaryColor,
+      // ignore: unnecessary_null_comparison
       onPressed: onTap == null
           ? null
           : () {
-              onTap();
+              onTap!();
               FocusScope.of(context).unfocus();
             },
       disabledColor: Colors.grey,
@@ -213,7 +214,7 @@ class _Button extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 14.0),
         child: Text(
-          action,
+          action!,
           style: const TextStyle(
             fontSize: 18.0,
             color: Colors.white,

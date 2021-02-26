@@ -15,7 +15,7 @@ class PlayPauseButtonBar extends StatelessWidget {
       children: [
         IconButton(
           icon: const Icon(Icons.skip_previous),
-          onPressed: context.ytController.previousVideo,
+          onPressed: context.ytController!.previousVideo,
         ),
         YoutubeValueBuilder(
           builder: (context, value) {
@@ -28,8 +28,8 @@ class PlayPauseButtonBar extends StatelessWidget {
               onPressed: value.isReady
                   ? () {
                       value.playerState == PlayerState.playing
-                          ? context.ytController.pause()
-                          : context.ytController.play();
+                          ? context.ytController!.pause()
+                          : context.ytController!.play();
                     }
                   : null,
             );
@@ -43,15 +43,15 @@ class PlayPauseButtonBar extends StatelessWidget {
               onPressed: () {
                 _isMuted.value = !isMuted;
                 isMuted
-                    ? context.ytController.unMute()
-                    : context.ytController.mute();
+                    ? context.ytController!.unMute()
+                    : context.ytController!.mute();
               },
             );
           },
         ),
         IconButton(
           icon: const Icon(Icons.skip_next),
-          onPressed: context.ytController.nextVideo,
+          onPressed: context.ytController!.nextVideo,
         ),
       ],
     );

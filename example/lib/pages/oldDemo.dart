@@ -14,7 +14,7 @@ class OldDemo extends StatefulWidget {
 }
 
 class _YoutubeAppDemoState extends State<OldDemo> {
-  YoutubePlayerController _controller;
+  YoutubePlayerController? _controller;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller
+          _controller!
             ..hidePauseOverlay()
             // Uncomment below to start autoplay on iOS
             //..play()
@@ -73,7 +73,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
     const player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
       // Passing controller to widgets below.
-      controller: _controller,
+      controller: _controller!,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Youtube Plyr Demo'),
@@ -108,7 +108,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
 
   @override
   void dispose() {
-    _controller.close();
+    _controller!.close();
     super.dispose();
   }
 }
@@ -132,7 +132,7 @@ class Controls extends StatelessWidget {
           _space,
           PlayPauseButtonBar(),
           _space,
-          VolumeSlider(),
+          //VolumeSlider(),
           _space,
           PlayerStateSection(),
         ],
