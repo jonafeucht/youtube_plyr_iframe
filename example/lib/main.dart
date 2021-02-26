@@ -35,7 +35,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
   String videoID = "PuMz4v5PYKc";
   List<Map<String, dynamic>> players = [
     {
-      "videoID": "F1B9Fk_SgI0",
+      "videoID": "AOhFzDN3eMI",
       "quality": ThumbnailQuality.max,
     },
     {
@@ -275,6 +275,98 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
           ),
         ],
       ),
+    );
+  }
+}
+
+///
+/// For getting youtube player from anywhere
+///
+
+class YoutubePlayer extends StatefulWidget {
+  final String videoID;
+  YoutubePlayer(this.videoID);
+  @override
+  _YoutubePlayerState createState() => _YoutubePlayerState();
+}
+
+class _YoutubePlayerState extends State<YoutubePlayer> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          _showDialog(
+            context,
+            widget.videoID,
+          );
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    if (kIsWeb && constraints.maxWidth > 800) {
+                      return Container(
+                        color: Colors.transparent,
+                        padding: EdgeInsets.all(5),
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: new Image.network(
+                            YoutubePlayerController.getThumbnail(
+                                videoId: widget.videoID,
+                                quality: ThumbnailQuality.max,
+                                webp: false),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        color: Colors.transparent,
+                        padding: EdgeInsets.all(5),
+                        width: MediaQuery.of(context).size.width * 2,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: new Image.network(
+                            YoutubePlayerController.getThumbnail(
+                                videoId: widget.videoID,
+                                quality: ThumbnailQuality.max,
+                                webp: false),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+            Icon(
+              Icons.play_circle_filled,
+              color: Colors.white,
+              size: 55.0,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showDialog(context, videoID) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return YoutubeViewer(
+          videoID,
+        );
+      },
     );
   }
 }
