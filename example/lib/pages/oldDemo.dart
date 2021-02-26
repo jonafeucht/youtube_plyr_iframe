@@ -72,6 +72,12 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   }
 
   @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     const player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
@@ -84,7 +90,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         body: ListView(
           children: [
             player,
-            Text("Hello"),
+            //const Controls(),
           ],
         ),
       ),
@@ -92,6 +98,8 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   }
 }
 
+///
+/// Migration to null safety pending
 ///
 class Controls extends StatelessWidget {
   ///
@@ -108,11 +116,11 @@ class Controls extends StatelessWidget {
           //MetaDataSection(),
           // _space,
           // SourceInputSection(),
-          // _space,
+          _space,
           // PlayPauseButtonBar(),
-          // _space,
-          // VolumeSlider(),
-          // _space,
+          _space,
+          //VolumeSlider(),
+          _space,
           // PlayerStateSection(),
         ],
       ),

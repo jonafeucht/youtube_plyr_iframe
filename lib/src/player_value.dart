@@ -16,10 +16,10 @@ class YoutubePlayerValue {
     this.position = const Duration(),
     this.buffered = 0.0,
     this.isFullScreen = false,
-    // this.volume = 100,
+    this.volume = 100,
     this.playerState = PlayerState.unknown,
     this.playbackRate = PlaybackRate.normal,
-    required this.playbackQuality,
+    this.playbackQuality,
     this.error = YoutubeError.none,
     this.metaData = const YoutubeMetaData(),
   });
@@ -40,7 +40,7 @@ class YoutubePlayerValue {
   final bool isFullScreen;
 
   /// The current volume assigned for the player.
-  // final String volume;
+  final double volume;
 
   /// The current state of the player defined as [PlayerState].
   final PlayerState playerState;

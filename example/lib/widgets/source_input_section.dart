@@ -88,13 +88,13 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                 _Button(
                   action: 'LOAD',
                   onTap: () {
-                    context.ytController!.load(_cleanId(_textController!.text));
+                    context.ytController.load(_cleanId(_textController!.text));
                   },
                 ),
                 _Button(
                   action: 'CUE',
                   onTap: () {
-                    context.ytController!.cue(_cleanId(_textController!.text)!);
+                    context.ytController.cue(_cleanId(_textController!.text)!);
                   },
                 ),
                 _Button(
@@ -102,7 +102,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                   onTap: _playlistType == null
                       ? null
                       : () {
-                          context.ytController!.loadPlaylist(
+                          context.ytController.loadPlaylist(
                             _textController!.text,
                             listType: _playlistType!,
                           );
@@ -113,7 +113,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                   onTap: _playlistType == null
                       ? null
                       : () {
-                          context.ytController!.cuePlaylist(
+                          context.ytController.cuePlaylist(
                             _textController!.text,
                             listType: _playlistType!,
                           );

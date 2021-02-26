@@ -23,7 +23,7 @@ import '../meta_data.dart';
 /// Use [YoutubePlayerIFrame] instead.
 class RawYoutubePlayer extends StatefulWidget {
   /// The [YoutubePlayerController].
-  final YoutubePlayerController controller;
+  final YoutubePlayerController? controller;
 
   /// Which gestures should be consumed by the youtube player.
   ///
@@ -34,13 +34,13 @@ class RawYoutubePlayer extends StatefulWidget {
   ///
   /// By default vertical and horizontal gestures are absorbed by the player.
   /// Passing an empty set will ignore the defaults.
-  //final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
+  final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
 
   /// Creates a [RawYoutubePlayer] widget.
   const RawYoutubePlayer({
     Key? key,
-    required this.controller,
-    //required this.gestureRecognizers,
+    this.controller,
+    this.gestureRecognizers,
   }) : super(key: key);
 
   @override
@@ -59,7 +59,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
   void initState() {
     super.initState();
     _webController = Completer();
-    controller = widget.controller;
+    controller = widget.controller!;
     WidgetsBinding.instance!.addObserver(this);
   }
 
@@ -94,8 +94,8 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
       initialData: InAppWebViewInitialData(
         data: player,
         baseUrl: controller.params!.privacyEnhanced!
-            ? ("https://www.youtube-nocookie.com" as Uri)
-            : ("https://youtube.com" as Uri),
+            ? Uri.parse("https://www.youtube-nocookie.com")
+            : Uri.parse("https://youtube.com"),
         encoding: 'utf-8',
         mimeType: 'text/html',
       ),

@@ -37,6 +37,6 @@ class YoutubePlayerControllerProvider extends InheritedWidget {
 /// YoutubePlayerControllerExtension
 extension YoutubePlayerControllerExtension on BuildContext {
   /// Finds the most recent [YoutubePlayerController] in its ancestors.
-  YoutubePlayerController? get ytController =>
+  YoutubePlayerController get ytController =>
       YoutubePlayerControllerProvider.of(this);
 }
