@@ -13,9 +13,9 @@ Supported Platforms:
 - **iOS**
 - **Web**
 
-<img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0">
+<img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0"><img src="https://i.ibb.co/DrrcRvq/Web-capture-21-2-2021-175044-web-example-starhelix-space.jpg" alt="web" border="0">
 
-[Click here for WEB DEMO](https://sarbagyastha.github.io/youtube_player_flutter)
+[Click here for WEB DEMO](https://web-example.starhelix.space/)
 
 ## Example App
 [<img src="https://itsallwidgets.com/images/google.png" height="70px">](https://play.google.com/store/apps/details?id=space.starhelix.lore.christianity)[<img src="https://chroniken.starhelix.space/dist/images/applestore.svg" height="70px">](https://apps.apple.com/app/id1484833082#?platform=iphone)
