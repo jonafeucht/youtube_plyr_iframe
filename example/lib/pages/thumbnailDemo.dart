@@ -1,7 +1,3 @@
-// Copyright 2021 Jona T. Feucht. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
@@ -45,15 +41,14 @@ class _ThumbnailDemo extends State<ThumbnailDemo> {
         child: Container(
           child: new Center(
             child: Column(
-              // center the children
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                for (var e in demo)
+                for (var i in demo)
                   Image.network(
                     YoutubePlayerController.getThumbnail(
-                        videoId: e["videoID"],
-                        quality: e["quality"],
+                        videoId: i["videoID"],
+                        quality: i["quality"],
                         webp: false),
                     fit: BoxFit.cover,
                   ),
