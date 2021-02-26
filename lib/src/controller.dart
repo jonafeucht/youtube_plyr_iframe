@@ -48,19 +48,19 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   /// Called when player exits fullscreen.
   VoidCallback? onExitFullscreen;
 
-  final StreamController<YoutubePlayerValue> _controller =
+  final StreamController<YoutubePlayerValue>? _controller =
       StreamController.broadcast();
 
-  YoutubePlayerValue _value = YoutubePlayerValue(playbackQuality: null);
+  YoutubePlayerValue? _value = YoutubePlayerValue(playbackQuality: null);
 
   /// The [YoutubePlayerValue].
-  YoutubePlayerValue get value => _value;
+  YoutubePlayerValue? get value => _value!;
 
   /// Updates [YoutubePlayerController] with provided [data].
   ///
   /// Intended for internal usage only.
   @override
-  void add(YoutubePlayerValue data) => _controller.add(data);
+  void add(YoutubePlayerValue data) => _controller!.add(data);
 
   /// Listen to updates in [YoutubePlayerController].
   @override
@@ -70,7 +70,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return _controller.stream.listen(
+    return _controller!.stream.listen(
       (value) {
         _value = value;
         onData!(value);
@@ -85,7 +85,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// Call when the controller is no longer used.
   @override
-  Future<void> close() => _controller.close();
+  Future<void> close() => _controller!.close();
 
   /// Plays the currently cued/loaded video.
   ///
@@ -142,7 +142,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
       loadParams += ',endSeconds:${endAt.inSeconds}';
     }
     _updateId(videoId);
-    if (_value.hasError) {
+    if (_value!.hasError) {
       pause();
     } else {
       invokeJavascript!('loadById({$loadParams})');
@@ -164,7 +164,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
       cueParams += ',endSeconds:${endAt.inSeconds}';
     }
     _updateId(videoId);
-    if (_value.hasError) {
+    if (_value!.hasError) {
       pause();
     } else {
       invokeJavascript!('cueById({$cueParams})');
@@ -214,9 +214,9 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
 
   void _updateId(String? id) {
     if (id!.length != 11) {
-      add(_value.copyWith(error: YoutubeError.invalidParam));
+      add(_value!.copyWith(error: YoutubeError.invalidParam));
     } else {
-      add(_value.copyWith(error: YoutubeError.none, hasPlayed: false));
+      add(_value!.copyWith(error: YoutubeError.none, hasPlayed: false));
     }
   }
 
@@ -244,7 +244,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   void seekTo(Duration position, {bool allowSeekAhead = true}) {
     invokeJavascript!('seekTo(${position.inSeconds},$allowSeekAhead)');
     play();
-    add(_value.copyWith(position: position));
+    add(_value!.copyWith(position: position));
   }
 
   /// Sets the size in pixels of the player.
@@ -280,11 +280,11 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   void hidePauseOverlay() => invokeJavascript!('hidePauseOverlay()');
 
   /// MetaData for the currently loaded or cued video.
-  YoutubeMetaData get metadata => _value.metaData;
+  YoutubeMetaData get metadata => _value!.metaData;
 
   /// Resets the value of [YoutubePlayerController].
   void reset() => add(
-        _value.copyWith(
+        _value!.copyWith(
           isReady: false,
           isFullScreen: false,
           playerState: PlayerState.unknown,

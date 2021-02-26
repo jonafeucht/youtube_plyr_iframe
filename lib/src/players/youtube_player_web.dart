@@ -23,16 +23,16 @@ import 'platform_view_stub.dart' if (dart.library.html) 'dart:ui' as ui;
 /// Use [YoutubePlayerIFrame] instead.
 class RawYoutubePlayer extends StatefulWidget {
   /// The [YoutubePlayerController].
-  final YoutubePlayerController controller;
+  final YoutubePlayerController? controller;
 
   /// no-op
-  final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
+  final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
 
   /// Creates a [MobileYoutubePlayer] widget.
   const RawYoutubePlayer({
     Key? key,
-    required this.controller,
-    required this.gestureRecognizers,
+    this.controller,
+    this.gestureRecognizers,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
   @override
   void initState() {
     super.initState();
-    controller = widget.controller;
+    controller = widget.controller!;
     _iFrame = Completer();
     final playerIFrame = IFrameElement()
       ..srcdoc = player
@@ -59,7 +59,7 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
             final Map<String, dynamic> data = jsonDecode(event.data);
             if (data.containsKey('Ready')) {
               controller.add(
-                controller.value.copyWith(isReady: true),
+                controller.value!.copyWith(isReady: true),
               );
             }
 
@@ -67,7 +67,7 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
               switch (data['StateChange'] as int) {
                 case -1:
                   controller.add(
-                    controller.value.copyWith(
+                    controller.value!.copyWith(
                       playerState: PlayerState.unStarted,
                       isReady: true,
                     ),
@@ -75,14 +75,14 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
                   break;
                 case 0:
                   controller.add(
-                    controller.value.copyWith(
+                    controller.value!.copyWith(
                       playerState: PlayerState.ended,
                     ),
                   );
                   break;
                 case 1:
                   controller.add(
-                    controller.value.copyWith(
+                    controller.value!.copyWith(
                       playerState: PlayerState.playing,
                       hasPlayed: true,
                       error: YoutubeError.none,
@@ -91,21 +91,21 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
                   break;
                 case 2:
                   controller.add(
-                    controller.value.copyWith(
+                    controller.value!.copyWith(
                       playerState: PlayerState.paused,
                     ),
                   );
                   break;
                 case 3:
                   controller.add(
-                    controller.value.copyWith(
+                    controller.value!.copyWith(
                       playerState: PlayerState.buffering,
                     ),
                   );
                   break;
                 case 5:
                   controller.add(
-                    controller.value.copyWith(
+                    controller.value!.copyWith(
                       playerState: PlayerState.cued,
                     ),
                   );
@@ -117,39 +117,39 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
 
             if (data.containsKey('PlaybackQualityChange')) {
               controller.add(
-                controller.value.copyWith(
-                    playbackQuality: data['PlaybackQualityChange'] as String),
+                controller.value!.copyWith(
+                    playbackQuality: data['PlaybackQualityChange'].toString()),
               );
             }
 
             if (data.containsKey('PlaybackRateChange')) {
-              final rate = data['PlaybackRateChange'] as num;
+              final rate = data['PlaybackRateChange'].toNum();
               controller.add(
-                controller.value.copyWith(playbackRate: rate.toDouble()),
+                controller.value!.copyWith(playbackRate: rate.toDouble()),
               );
             }
 
             if (data.containsKey('Errors')) {
               controller.add(
-                controller.value
-                    .copyWith(error: errorEnum(data['Errors'] as int)),
+                controller.value!
+                    .copyWith(error: errorEnum(data['Errors'].toInt())),
               );
             }
 
             if (data.containsKey('VideoData')) {
               controller.add(
-                controller.value.copyWith(
+                controller.value!.copyWith(
                     metaData: YoutubeMetaData.fromRawData(data['VideoData'])),
               );
             }
 
             if (data.containsKey('VideoTime')) {
-              final position = data['VideoTime']['currentTime'] as double;
-              final buffered = data['VideoTime']['videoLoadedFraction'] as num;
+              final position = data['VideoTime']['currentTime'].toDouble();
+              final buffered = data['VideoTime']['videoLoadedFraction'].toNum();
 
               if (position == null || buffered == null) return;
               controller.add(
-                controller.value.copyWith(
+                controller.value!.copyWith(
                   position: Duration(milliseconds: (position * 1000).floor()),
                   buffered: buffered.toDouble(),
                 ),

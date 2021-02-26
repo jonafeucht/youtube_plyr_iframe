@@ -9,15 +9,14 @@ import '../controller.dart';
 /// An inherited widget to provide [YoutubePlayerController] to it's descendants.
 class YoutubePlayerControllerProvider extends InheritedWidget {
   /// The [YoutubePlayerController].
-  final YoutubePlayerController controller;
+  final YoutubePlayerController? controller;
 
   /// An inherited widget that provide [YoutubePlayerController] to it's descendants.
   const YoutubePlayerControllerProvider({
     Key? key,
-    required this.controller,
+    this.controller,
     required Widget child,
-  })   : assert(controller != null),
-        super(key: key, child: child);
+  }) : super(key: key, child: child);
 
   /// Finds the most recent [YoutubePlayerController] in its ancestors.
   static YoutubePlayerController of(BuildContext context) {
@@ -27,7 +26,7 @@ class YoutubePlayerControllerProvider extends InheritedWidget {
       controllerProvider != null,
       'Cannot find YoutubePlayerControllerProvider above. Please wrap parent widget with YoutubePlayerControllerProvider.',
     );
-    return controllerProvider!.controller;
+    return controllerProvider!.controller!;
   }
 
   @override

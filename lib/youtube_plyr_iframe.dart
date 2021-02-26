@@ -23,7 +23,7 @@ export 'src/player_params.dart';
 class YoutubePlayerIFrame extends StatelessWidget {
   final YoutubePlayerController? controller;
 
-  final double? aspectRatio;
+  final double aspectRatio;
 
   final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
 
@@ -36,12 +36,9 @@ class YoutubePlayerIFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: aspectRatio!,
-      child: RawYoutubePlayer(
-        controller: controller!,
-        gestureRecognizers: gestureRecognizers!,
-      ),
+    return RawYoutubePlayer(
+      controller: controller!,
+      //gestureRecognizers: gestureRecognizers!,
     );
   }
 }
