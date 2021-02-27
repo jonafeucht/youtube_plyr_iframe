@@ -89,6 +89,17 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                                 builder: (context) => ThumbnailDemo()),
                           ),
                         ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                          child: Text("Thumbnail Demo"),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ThumbnailDemo()),
+                          ),
+                        ),
                       ],
                     ),
                     Text("Livestream"),
@@ -169,6 +180,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
@@ -185,6 +197,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
@@ -227,7 +240,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
       params: YoutubePlayerParams(
         showControls: true,
         showFullscreenButton: true,
-        desktopMode: false,
+        desktopMode: false, // false for platform design
         autoPlay: false,
         enableCaption: true,
         showVideoAnnotations: false,
@@ -328,6 +341,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: widget.videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
@@ -344,6 +358,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: widget.videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,

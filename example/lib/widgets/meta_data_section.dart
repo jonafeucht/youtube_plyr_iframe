@@ -79,7 +79,7 @@ class _Text extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: value ?? '',
+            text: value,
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.w300,
