@@ -15,8 +15,9 @@ String youtubeIFrameTag(YoutubePlayerController controller) {
     'modestbranding': '1',
     'cc_load_policy': _boolean(controller.params.enableCaption),
     'cc_lang_pref': controller.params.captionLanguage,
-    'start': '${controller.params.startAt!.inSeconds}',
-    if (controller.params.endAt != null) 'end': '${controller.params.endAt!}',
+    'start': '${controller.params.startAt.inSeconds}',
+    if (controller.params.endAt != null)
+      'end': '${controller.params.endAt!.inSeconds}',
     'disablekb': _boolean(!controller.params.enableKeyboard),
     'color': controller.params.color,
     'hl': controller.params.interfaceLanguage,
@@ -24,7 +25,7 @@ String youtubeIFrameTag(YoutubePlayerController controller) {
     if (controller.params.playlist.isNotEmpty)
       'playlist': '${controller.params.playlist.join(',')}'
   };
-  final youtubeAuthority = controller.params.privacyEnhanced!
+  final youtubeAuthority = controller.params.privacyEnhanced
       ? 'www.youtube-nocookie.com'
       : 'www.youtube.com';
   final sourceUri = Uri.https(
@@ -44,7 +45,6 @@ function play() {
   player.playVideo();
   return '';
 }
-
 function pause() {
   player.pauseVideo();
   return '';

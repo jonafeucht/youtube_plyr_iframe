@@ -14,15 +14,21 @@ class OldDemo extends StatefulWidget {
 }
 
 class _YoutubeAppDemoState extends State<OldDemo> {
-  late YoutubePlayerController _controller;
+  // ignore: close_sinks
+  YoutubePlayerController? _controller;
 
   @override
   void initState() {
     super.initState();
-
     _controller = YoutubePlayerController(
-      initialVideoId: 'DXHUAYxuXX8', // livestream example
+      initialVideoId: '5qap5aO4i9A', // livestream example
       params: YoutubePlayerParams(
+        playlist: [
+          'F1B9Fk_SgI0',
+          "MnrJzXM7a6o",
+          "FTQbiNvZqaY",
+          "iYKXdt0LRs8",
+        ],
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
         showFullscreenButton: true,
@@ -36,14 +42,14 @@ class _YoutubeAppDemoState extends State<OldDemo> {
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller
+          _controller!
             ..hidePauseOverlay()
             // Uncomment below to start autoplay on iOS
             //..play()
             ..hideTopMenu();
         }
       });
-    // Uncomment below for auto rotation on fullscreen
+    //Uncomment below for auto rotation on fullscreen
     // _controller.onEnterFullscreen = () {
     //   SystemChrome.setPreferredOrientations([
     //     DeviceOrientation.landscapeLeft,
@@ -67,32 +73,47 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   Widget build(BuildContext context) {
     const player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
-      controller: _controller,
+      // Passing controller to widgets below.
+      controller: _controller!,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Youtube Plyr Demo'),
         ),
-        body: ListView(
-          children: [
-            player,
-            SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: Text(
-                "Controls pending migration to null safety.",
-              ),
-            ),
-            //const Controls(),
-          ],
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            if (kIsWeb && constraints.maxWidth > 800) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Expanded(child: player),
+                  const SizedBox(
+                    width: 500,
+                    child: SingleChildScrollView(
+                      child: Controls(),
+                    ),
+                  ),
+                ],
+              );
+            }
+            return ListView(
+              children: [
+                player,
+                const Controls(),
+              ],
+            );
+          },
         ),
       ),
     );
   }
+
+  // @override
+  // void dispose() {
+  //   _controller.close();
+  //   super.dispose();
+  // }
 }
 
-///
-/// Migration to null safety pending
 ///
 class Controls extends StatelessWidget {
   ///
@@ -106,15 +127,15 @@ class Controls extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _space,
-          //MetaDataSection(),
-          // _space,
-          // SourceInputSection(),
+          MetaDataSection(),
           _space,
-          // PlayPauseButtonBar(),
+          SourceInputSection(),
           _space,
-          //VolumeSlider(),
+          PlayPauseButtonBar(),
           _space,
-          // PlayerStateSection(),
+          VolumeSlider(),
+          _space,
+          PlayerStateSection(),
         ],
       ),
     );

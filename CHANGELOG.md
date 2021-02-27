@@ -1,3 +1,6 @@
+## 2.0.0-nullsafety.3
+- 💪 Running with sound null safety 💪
+
 ## 2.0.0-nullsafety.2
 - Relax SDK version constraints.
 - Android `minSdkVersion 23` is required.

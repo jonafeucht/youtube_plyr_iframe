@@ -8,7 +8,7 @@ class ThumbnailDemo extends StatefulWidget {
 }
 
 class _ThumbnailDemo extends State<ThumbnailDemo> {
-  static String videoID = "F1B9Fk_SgI0";
+  static String videoID = "GmqVpskrLsQ";
 
   List<Map<String, dynamic>> demo = [
     {
@@ -32,6 +32,7 @@ class _ThumbnailDemo extends State<ThumbnailDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red,
         title: Text("Thumbnail Demo"),
         centerTitle: true,
         automaticallyImplyLeading: true,

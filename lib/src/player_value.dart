@@ -40,7 +40,7 @@ class YoutubePlayerValue {
   final bool isFullScreen;
 
   /// The current volume assigned for the player.
-  final double volume;
+  final int volume;
 
   /// The current state of the player defined as [PlayerState].
   final PlayerState playerState;
@@ -83,7 +83,7 @@ class YoutubePlayerValue {
       position: position ?? this.position,
       buffered: buffered ?? this.buffered,
       isFullScreen: isFullScreen ?? this.isFullScreen,
-      // volume: volume,
+      volume: volume as int? ?? this.volume,
       playerState: playerState ?? this.playerState,
       playbackRate: playbackRate ?? this.playbackRate,
       playbackQuality: playbackQuality ?? this.playbackQuality,
@@ -99,7 +99,7 @@ class YoutubePlayerValue {
         'isReady: $isReady, '
         'position: ${position.inSeconds} sec. , '
         'buffered: $buffered , '
-        // 'volume: $volume, '
+        'volume: $volume, '
         'playerState: $playerState, '
         'playbackRate: $playbackRate, '
         'playbackQuality: $playbackQuality, '

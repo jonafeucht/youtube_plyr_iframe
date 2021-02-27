@@ -70,7 +70,7 @@ class YoutubePlayerParams {
   ///
   /// Note that the time is measured from the beginning of the video and not from either the value of the start player parameter or the startSeconds parameter,
   /// which is used in YouTube Player API functions for loading or queueing a video.
-  final double? endAt;
+  final Duration? endAt;
 
   /// Setting this parameter to false prevents the fullscreen button from displaying in the player.
   ///
@@ -125,21 +125,21 @@ class YoutubePlayerParams {
   /// Note that similar to the [YoutubePlayerController.seekTo] function,
   /// the player will look for the closest keyframe to the time you specify.
   /// This means that sometimes the play head may seek to just before the requested time, usually no more than around two seconds.
-  final Duration? startAt;
+  final Duration startAt;
 
   /// Enabling desktop mode.
   ///
   /// The player controls will be like the one seen on youtube.com
   ///
   /// Only effective on mobile devices.
-  final bool? desktopMode;
+  final bool desktopMode;
 
   /// Enables privacy enhanced embedding mode.
   ///
   /// More detail at https://support.google.com/youtube/answer/171780?hl=en
   ///
   /// Default is false.
-  final bool? privacyEnhanced;
+  final bool privacyEnhanced;
 
   /// Defines player parameters for [YoutubePlayer].
   const YoutubePlayerParams({

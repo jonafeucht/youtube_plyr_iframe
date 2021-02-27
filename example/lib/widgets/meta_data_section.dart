@@ -13,79 +13,80 @@ class MetaDataSection extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Hello"),
-          // _Text('Title', value.metaData.title),
-          // const SizedBox(height: 10),
-          // _Text('Channel', value.metaData.author),
-          // const SizedBox(height: 10),
-          // _Text(
-          //   'Playback Quality',
-          //   value.playbackQuality!,
-          // ),
-          // const SizedBox(height: 10),
-          // Row(
-          //   children: [
-          //     _Text('Video Id', value.metaData.videoId),
-          //     const Spacer(),
-          //     const _Text(
-          //       'Speed',
-          //       '',
-          //     ),
-          // YoutubeValueBuilder(
-          //   builder: (context, value) {
-          //     return DropdownButton(
-          //       value: value.playbackRate,
-          //       isDense: true,
-          //       underline: const SizedBox(),
-          //       items: PlaybackRate.all
-          //           .map(
-          //             (rate) => DropdownMenuItem(
-          //               child: Text(
-          //                 '${rate}x',
-          //                 style: TextStyle(
-          //                   color: Theme.of(context).primaryColor,
-          //                   fontWeight: FontWeight.w300,
-          //                 ),
-          //               ),
-          //               value: rate,
-          //             ),
-          //           )
-          //           .toList(),
-          //       // onChanged: context.ytController.setPlaybackRate,
-          //     );
-          //   },
-          // ),
+          _Text('Title', value!.metaData.title),
+          const SizedBox(height: 10),
+          _Text('Channel', value.metaData.author),
+          const SizedBox(height: 10),
+          _Text(
+            'Playback Quality',
+            value.playbackQuality,
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              _Text('Video Id', value.metaData.videoId),
+              const Spacer(),
+              const _Text(
+                'Speed',
+                '',
+              ),
+              YoutubeValueBuilder(
+                builder: (context, value) {
+                  return DropdownButton(
+                    value: value!.playbackRate,
+                    isDense: true,
+                    underline: const SizedBox(),
+                    items: PlaybackRate.all
+                        .map(
+                          (rate) => DropdownMenuItem(
+                            child: Text(
+                              '${rate}x',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            value: rate,
+                          ),
+                        )
+                        .toList(),
+                    //onChanged: context.ytController.setPlaybackRate,
+                  );
+                },
+              ),
+            ],
+          ),
         ],
       );
     });
   }
 }
 
-// class _Text extends StatelessWidget {
-//   final String title;
-//   final String value;
+class _Text extends StatelessWidget {
+  final String title;
+  final String? value;
 
-//   const _Text(this.title, this.value);
+  const _Text(this.title, this.value);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return RichText(
-//       text: TextSpan(
-//         text: '$title : ',
-//         style: TextStyle(
-//           color: Theme.of(context).primaryColor,
-//           fontWeight: FontWeight.bold,
-//         ),
-//         children: [
-//           TextSpan(
-//             text: value,
-//             style: TextStyle(
-//               color: Theme.of(context).primaryColor,
-//               fontWeight: FontWeight.w300,
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        text: '$title : ',
+        style: TextStyle(
+          color: Theme.of(context).primaryColor,
+          fontWeight: FontWeight.bold,
+        ),
+        children: [
+          TextSpan(
+            text: value,
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

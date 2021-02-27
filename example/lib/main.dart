@@ -52,69 +52,75 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         title: Text("Demo"),
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+        elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: new Center(
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: new Column(
-                // center the children
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        child: Text("Old Demo"),
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => OldDemo()),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            child: new Center(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: new Column(
+                  // center the children
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          child: Text("Old Demo"),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => OldDemo()),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      ElevatedButton(
-                        child: Text("Thumbnail Demo"),
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ThumbnailDemo()),
+                        SizedBox(
+                          width: 10,
                         ),
-                      ),
-                    ],
-                  ),
-                  Text("Livestream"),
-                  ytPlayer("5qap5aO4i9A"),
-                  Divider(),
-                  Text("Single Player"),
-                  ytPlayer("F1B9Fk_SgI0"),
-                  Divider(),
-                  Text("From String"),
-                  ytPlayer(videoID),
-                  Divider(),
-                  Text("List View"),
-                  for (var i in players)
-                    ytPlayer(
-                      i["videoID"],
+                        ElevatedButton(
+                          child: Text("Thumbnail Demo"),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ThumbnailDemo()),
+                          ),
+                        ),
+                      ],
                     ),
-                  Divider(),
-                  Text("Row List"),
-                  Wrap(
-                    spacing: 8.0,
-                    runSpacing: 4.0,
-                    direction: Axis.horizontal,
-                    children: [
-                      ytPlayer("TyimCGEkiUc"),
-                      Text(
-                        "Hello World",
-                        style: TextStyle(fontSize: 20),
+                    Text("Livestream"),
+                    ytPlayer("5qap5aO4i9A"),
+                    Divider(),
+                    Text("Single Player"),
+                    ytPlayer("F1B9Fk_SgI0"),
+                    Divider(),
+                    Text("From String"),
+                    ytPlayer(videoID),
+                    Divider(),
+                    Text("List View"),
+                    for (var i in players)
+                      ytPlayer(
+                        i["videoID"],
                       ),
-                    ],
-                  ),
-                ],
+                    Divider(),
+                    Text("Row List"),
+                    Wrap(
+                      spacing: 8.0,
+                      runSpacing: 4.0,
+                      direction: Axis.horizontal,
+                      children: [
+                        ytPlayer("TyimCGEkiUc"),
+                        Text(
+                          "Hello World",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -205,20 +211,21 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
 }
 
 class YoutubeViewer extends StatefulWidget {
-  final String videoID;
+  final String? videoID;
   YoutubeViewer(this.videoID);
   @override
   _YoutubeViewerState createState() => _YoutubeViewerState();
 }
 
 class _YoutubeViewerState extends State<YoutubeViewer> {
-  late YoutubePlayerController _controller;
+  // ignore: close_sinks
+  YoutubePlayerController? _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: widget.videoID,
+      initialVideoId: widget.videoID!,
       params: YoutubePlayerParams(
         showControls: true,
         showFullscreenButton: true,
@@ -232,10 +239,10 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller
+          _controller!
             ..hidePauseOverlay()
-            // Comment below to stop Autoplay
-            ..play()
+            // Uncomment below to stop Autoplay
+            // ..play()
             ..hideTopMenu();
         }
       });
@@ -263,7 +270,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
   Widget build(BuildContext context) {
     final player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
-      controller: _controller,
+      controller: _controller!,
       child: AlertDialog(
         backgroundColor: Colors.black,
         content: player,

@@ -12,8 +12,8 @@ class SourceInputSection extends StatefulWidget {
 }
 
 class _SourceInputSectionState extends State<SourceInputSection> {
-  late TextEditingController _textController;
-  late String _playlistType;
+  TextEditingController? _textController;
+  String? _playlistType;
 
   @override
   void initState() {
@@ -52,13 +52,13 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                   )
                   .toList(),
               onChanged: (value) {
-                _playlistType = value!;
+                _playlistType = value;
                 setState(() {});
               },
             ),
             const SizedBox(height: 10),
             TextField(
-              enabled: value.isReady,
+              enabled: value!.isReady,
               controller: _textController,
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -72,7 +72,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                 ),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
-                  onPressed: () => _textController.clear(),
+                  onPressed: () => _textController!.clear(),
                 ),
               ),
             ),
@@ -88,13 +88,13 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                 _Button(
                   action: 'LOAD',
                   onTap: () {
-                    context.ytController.load(_cleanId(_textController.text));
+                    context.ytController.load(_cleanId(_textController!.text)!);
                   },
                 ),
                 _Button(
                   action: 'CUE',
                   onTap: () {
-                    context.ytController.cue(_cleanId(_textController.text)!);
+                    context.ytController.cue(_cleanId(_textController!.text)!);
                   },
                 ),
                 _Button(
@@ -103,20 +103,19 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                       ? null
                       : () {
                           context.ytController.loadPlaylist(
-                            _textController.text,
-                            listType: _playlistType,
+                            _textController!.text,
+                            listType: _playlistType!,
                           );
                         },
                 ),
                 _Button(
                   action: 'CUE PLAYLIST',
-                  // ignore: unnecessary_null_comparison
                   onTap: _playlistType == null
                       ? null
                       : () {
                           context.ytController.cuePlaylist(
-                            _textController.text,
-                            listType: _playlistType,
+                            _textController!.text,
+                            listType: _playlistType!,
                           );
                         },
                 ),
@@ -184,26 +183,25 @@ class _SourceInputSectionState extends State<SourceInputSection> {
 
   @override
   void dispose() {
-    _textController.dispose();
+    _textController?.dispose();
     super.dispose();
   }
 }
 
 class _Button extends StatelessWidget {
   final VoidCallback? onTap;
-  final String? action;
+  final String action;
 
   const _Button({
     Key? key,
-    this.onTap,
-    this.action,
+    required this.onTap,
+    required this.action,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       color: Theme.of(context).primaryColor,
-      // ignore: unnecessary_null_comparison
       onPressed: onTap == null
           ? null
           : () {
@@ -215,7 +213,7 @@ class _Button extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 14.0),
         child: Text(
-          action!,
+          action,
           style: const TextStyle(
             fontSize: 18.0,
             color: Colors.white,
