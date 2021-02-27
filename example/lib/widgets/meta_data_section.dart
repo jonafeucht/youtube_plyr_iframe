@@ -50,7 +50,7 @@ class MetaDataSection extends StatelessWidget {
                           ),
                         )
                         .toList(),
-                    //onChanged: context.ytController.setPlaybackRate,
+                    onChanged: context.ytController.setPlaybackRate,
                   );
                 },
               ),

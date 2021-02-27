@@ -252,7 +252,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
       invokeJavascript('setSize(${size.width}, ${size.height})');
 
   /// Sets the playback speed for the video.
-  void setPlaybackRate(double rate) =>
+  void setPlaybackRate(double? rate) =>
       invokeJavascript('setPlaybackRate($rate)');
 
   /// This function indicates whether the video player should continuously play a playlist
