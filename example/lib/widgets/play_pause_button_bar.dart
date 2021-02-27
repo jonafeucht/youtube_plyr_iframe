@@ -21,7 +21,7 @@ class PlayPauseButtonBar extends StatelessWidget {
           builder: (context, value) {
             return IconButton(
               icon: Icon(
-                value.playerState == PlayerState.playing
+                value!.playerState == PlayerState.playing
                     ? Icons.pause
                     : Icons.play_arrow,
               ),

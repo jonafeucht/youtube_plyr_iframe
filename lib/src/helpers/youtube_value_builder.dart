@@ -10,13 +10,13 @@ import 'youtube_value_provider.dart';
 
 class YoutubeValueBuilder extends StatefulWidget {
   const YoutubeValueBuilder({
-    Key key,
+    Key? key,
     this.controller,
-    @required this.builder,
+    required this.builder,
   }) : super(key: key);
 
-  final YoutubePlayerController controller;
-  final Widget Function(BuildContext, YoutubePlayerValue) builder;
+  final YoutubePlayerController? controller;
+  final Widget Function(BuildContext, YoutubePlayerValue?) builder;
 
   _YoutubeValueBuilderState createState() => _YoutubeValueBuilderState();
 }

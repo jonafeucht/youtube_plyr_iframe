@@ -209,20 +209,21 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
 }
 
 class YoutubeViewer extends StatefulWidget {
-  final String videoID;
+  final String? videoID;
   YoutubeViewer(this.videoID);
   @override
   _YoutubeViewerState createState() => _YoutubeViewerState();
 }
 
 class _YoutubeViewerState extends State<YoutubeViewer> {
-  YoutubePlayerController _controller;
+  // ignore: close_sinks
+  YoutubePlayerController? _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: widget.videoID,
+      initialVideoId: widget.videoID!,
       params: YoutubePlayerParams(
         showControls: true,
         showFullscreenButton: true,
@@ -231,11 +232,12 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
+        privacyEnhanced: true,
         playsInline: false, // iOS only
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller
+          _controller!
             ..hidePauseOverlay()
             // Uncomment below to stop Autoplay
             // ..play()
@@ -266,7 +268,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
   Widget build(BuildContext context) {
     final player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
-      controller: _controller,
+      controller: _controller!,
       child: AlertDialog(
         backgroundColor: Colors.black,
         content: player,
