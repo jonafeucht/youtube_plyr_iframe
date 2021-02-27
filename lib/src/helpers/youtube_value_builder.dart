@@ -1,5 +1,3 @@
-// Copyright 2021 Jona T. Feucht. All rights reserved.
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';

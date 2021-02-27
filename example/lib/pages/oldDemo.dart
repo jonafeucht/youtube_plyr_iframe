@@ -19,39 +19,31 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   @override
   void initState() {
     super.initState();
+
     _controller = YoutubePlayerController(
-      initialVideoId: '5qap5aO4i9A',
-    );
-    // _controller = YoutubePlayerController(
-    //   initialVideoId: '5qap5aO4i9A', // livestream example
-    //   params: YoutubePlayerParams(
-    //     playlist: [
-    //       'F1B9Fk_SgI0',
-    //       "MnrJzXM7a6o",
-    //       "FTQbiNvZqaY",
-    //       "iYKXdt0LRs8",
-    //     ],
-    //     //startAt: Duration(minutes: 1, seconds: 5),
-    //     showControls: true,
-    //     showFullscreenButton: true,
-    //     desktopMode: false, // false for platform design
-    //     autoPlay: false,
-    //     enableCaption: true,
-    //     showVideoAnnotations: false,
-    //     enableJavaScript: true,
-    //     privacyEnhanced: true,
-    //     playsInline: true, // iOS only - Auto fullscreen or not
-    //   ),
-    // )..listen((value) {
-    //     if (value.isReady && !value.hasPlayed) {
-    //       _controller!
-    //         ..hidePauseOverlay()
-    //         // Uncomment below to start autoplay on iOS
-    //         //..play()
-    //         ..hideTopMenu();
-    //     }
-    //   });
-    //Uncomment below for auto rotation on fullscreen
+      initialVideoId: 'DXHUAYxuXX8', // livestream example
+      params: YoutubePlayerParams(
+        //startAt: Duration(minutes: 1, seconds: 5),
+        showControls: true,
+        showFullscreenButton: true,
+        desktopMode: false, // false for platform design
+        autoPlay: false,
+        enableCaption: true,
+        showVideoAnnotations: false,
+        enableJavaScript: true,
+        privacyEnhanced: true,
+        playsInline: true, // iOS only - Auto fullscreen or not
+      ),
+    )..listen((value) {
+        if (value.isReady && !value.hasPlayed) {
+          _controller
+            ..hidePauseOverlay()
+            // Uncomment below to start autoplay on iOS
+            //..play()
+            ..hideTopMenu();
+        }
+      });
+    // Uncomment below for auto rotation on fullscreen
     // _controller.onEnterFullscreen = () {
     //   SystemChrome.setPreferredOrientations([
     //     DeviceOrientation.landscapeLeft,
@@ -72,16 +64,9 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   }
 
   @override
-  void dispose() {
-    _controller.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     const player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
-      // Passing controller to widgets below.
       controller: _controller,
       child: Scaffold(
         appBar: AppBar(
@@ -90,6 +75,14 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         body: ListView(
           children: [
             player,
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: Text(
+                "Controls pending migration to null safety.",
+              ),
+            ),
             //const Controls(),
           ],
         ),

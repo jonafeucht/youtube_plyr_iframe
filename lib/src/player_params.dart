@@ -113,12 +113,12 @@ class YoutubePlayerParams {
   /// This parameter controls whether videos play inline or fullscreen in an HTML5 player on iOS.
   ///
   /// Default is true.
-  final bool? playsInline;
+  final bool playsInline;
 
   /// Enabling this will ensure that related videos will come from the same channel as the video that was just played.
   ///
   /// Default is false.
-  final bool? strictRelatedVideos;
+  final bool strictRelatedVideos;
 
   /// This parameter causes the player to begin playing the video at the given number of seconds from the start of the video.
   ///

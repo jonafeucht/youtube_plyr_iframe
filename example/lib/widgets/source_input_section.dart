@@ -12,8 +12,8 @@ class SourceInputSection extends StatefulWidget {
 }
 
 class _SourceInputSectionState extends State<SourceInputSection> {
-  TextEditingController? _textController;
-  String? _playlistType;
+  late TextEditingController _textController;
+  late String _playlistType;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                   )
                   .toList(),
               onChanged: (value) {
-                _playlistType = value;
+                _playlistType = value!;
                 setState(() {});
               },
             ),
@@ -72,7 +72,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                 ),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
-                  onPressed: () => _textController!.clear(),
+                  onPressed: () => _textController.clear(),
                 ),
               ),
             ),
@@ -88,13 +88,13 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                 _Button(
                   action: 'LOAD',
                   onTap: () {
-                    context.ytController.load(_cleanId(_textController!.text));
+                    context.ytController.load(_cleanId(_textController.text));
                   },
                 ),
                 _Button(
                   action: 'CUE',
                   onTap: () {
-                    context.ytController.cue(_cleanId(_textController!.text)!);
+                    context.ytController.cue(_cleanId(_textController.text)!);
                   },
                 ),
                 _Button(
@@ -103,19 +103,20 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                       ? null
                       : () {
                           context.ytController.loadPlaylist(
-                            _textController!.text,
-                            listType: _playlistType!,
+                            _textController.text,
+                            listType: _playlistType,
                           );
                         },
                 ),
                 _Button(
                   action: 'CUE PLAYLIST',
+                  // ignore: unnecessary_null_comparison
                   onTap: _playlistType == null
                       ? null
                       : () {
                           context.ytController.cuePlaylist(
-                            _textController!.text,
-                            listType: _playlistType!,
+                            _textController.text,
+                            listType: _playlistType,
                           );
                         },
                 ),
@@ -183,7 +184,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
 
   @override
   void dispose() {
-    _textController!.dispose();
+    _textController.dispose();
     super.dispose();
   }
 }

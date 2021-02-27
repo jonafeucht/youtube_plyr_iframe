@@ -35,7 +35,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   final String? initialVideoId;
 
   /// Defines default parameters for the player.
-  final YoutubePlayerParams? params;
+  final YoutubePlayerParams params;
 
   /// Can be used to invokes javascript function.
   ///
@@ -48,19 +48,19 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   /// Called when player exits fullscreen.
   VoidCallback? onExitFullscreen;
 
-  final StreamController<YoutubePlayerValue>? _controller =
+  final StreamController<YoutubePlayerValue> _controller =
       StreamController.broadcast();
 
   YoutubePlayerValue _value = YoutubePlayerValue();
 
   /// The [YoutubePlayerValue].
-  YoutubePlayerValue? get value => _value;
+  YoutubePlayerValue get value => _value;
 
   /// Updates [YoutubePlayerController] with provided [data].
   ///
   /// Intended for internal usage only.
   @override
-  void add(YoutubePlayerValue data) => _controller!.add(data);
+  void add(YoutubePlayerValue data) => _controller.add(data);
 
   /// Listen to updates in [YoutubePlayerController].
   @override
@@ -70,7 +70,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return _controller!.stream.listen(
+    return _controller.stream.listen(
       (value) {
         _value = value;
         onData!(value);
@@ -85,7 +85,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// Call when the controller is no longer used.
   @override
-  Future<void> close() => _controller!.close();
+  Future<void> close() => _controller.close();
 
   /// Plays the currently cued/loaded video.
   ///

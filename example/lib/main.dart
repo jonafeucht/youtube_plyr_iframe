@@ -222,11 +222,12 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
       params: YoutubePlayerParams(
         showControls: true,
         showFullscreenButton: true,
-        desktopMode: false,
+        desktopMode: false, // false for platform design
         autoPlay: false,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
+        privacyEnhanced: true,
         playsInline: false, // iOS only
       ),
     )..listen((value) {

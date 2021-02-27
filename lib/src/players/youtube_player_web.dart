@@ -59,7 +59,7 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
             final Map<String, dynamic> data = jsonDecode(event.data);
             if (data.containsKey('Ready')) {
               controller.add(
-                controller.value!.copyWith(isReady: true),
+                controller.value.copyWith(isReady: true),
               );
             }
 
@@ -67,7 +67,7 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
               switch (data['StateChange'] as int) {
                 case -1:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.unStarted,
                       isReady: true,
                     ),
@@ -75,14 +75,14 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
                   break;
                 case 0:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.ended,
                     ),
                   );
                   break;
                 case 1:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.playing,
                       hasPlayed: true,
                       error: YoutubeError.none,
@@ -91,21 +91,21 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
                   break;
                 case 2:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.paused,
                     ),
                   );
                   break;
                 case 3:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.buffering,
                     ),
                   );
                   break;
                 case 5:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.cued,
                     ),
                   );
@@ -117,7 +117,7 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
 
             if (data.containsKey('PlaybackQualityChange')) {
               controller.add(
-                controller.value!.copyWith(
+                controller.value.copyWith(
                     playbackQuality: data['PlaybackQualityChange'].toString()),
               );
             }
@@ -125,20 +125,20 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
             if (data.containsKey('PlaybackRateChange')) {
               final rate = data['PlaybackRateChange'].toNum();
               controller.add(
-                controller.value!.copyWith(playbackRate: rate.toDouble()),
+                controller.value.copyWith(playbackRate: rate.toDouble()),
               );
             }
 
             if (data.containsKey('Errors')) {
               controller.add(
-                controller.value!
+                controller.value
                     .copyWith(error: errorEnum(data['Errors'].toInt())),
               );
             }
 
             if (data.containsKey('VideoData')) {
               controller.add(
-                controller.value!.copyWith(
+                controller.value.copyWith(
                     metaData: YoutubeMetaData.fromRawData(data['VideoData'])),
               );
             }
@@ -149,7 +149,7 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
 
               if (position == null || buffered == null) return;
               controller.add(
-                controller.value!.copyWith(
+                controller.value.copyWith(
                   position: Duration(milliseconds: (position * 1000).floor()),
                   buffered: buffered.toDouble(),
                 ),

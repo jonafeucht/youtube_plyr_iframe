@@ -80,7 +80,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
       case AppLifecycleState.inactive:
         break;
       case AppLifecycleState.paused:
-        _cachedPlayerState = controller.value!.playerState;
+        _cachedPlayerState = controller.value.playerState;
         controller.pause();
         break;
       default:
@@ -93,7 +93,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
       key: ValueKey(controller.hashCode),
       initialData: InAppWebViewInitialData(
         data: player,
-        baseUrl: controller.params!.privacyEnhanced!
+        baseUrl: controller.params.privacyEnhanced!
             ? Uri.parse("https://www.youtube-nocookie.com")
             : Uri.parse("https://youtube.com"),
         encoding: 'utf-8',
@@ -141,7 +141,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
               _isPlayerReady = true;
               if (_onLoadStopCalled) {
                 controller.add(
-                  controller.value!.copyWith(isReady: true),
+                  controller.value.copyWith(isReady: true),
                 );
               }
             },
@@ -152,7 +152,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
               switch (args.first as int) {
                 case -1:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.unStarted,
                       isReady: true,
                     ),
@@ -160,14 +160,14 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
                   break;
                 case 0:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.ended,
                     ),
                   );
                   break;
                 case 1:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.playing,
                       hasPlayed: true,
                       error: YoutubeError.none,
@@ -176,21 +176,21 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
                   break;
                 case 2:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.paused,
                     ),
                   );
                   break;
                 case 3:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.buffering,
                     ),
                   );
                   break;
                 case 5:
                   controller.add(
-                    controller.value!.copyWith(
+                    controller.value.copyWith(
                       playerState: PlayerState.cued,
                     ),
                   );
@@ -204,7 +204,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             handlerName: 'PlaybackQualityChange',
             callback: (args) {
               controller.add(
-                controller.value!
+                controller.value
                     .copyWith(playbackQuality: args.first as String),
               );
             },
@@ -214,7 +214,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             callback: (args) {
               final num rate = args.first;
               controller.add(
-                controller.value!.copyWith(playbackRate: rate.toDouble()),
+                controller.value.copyWith(playbackRate: rate.toDouble()),
               );
             },
           )
@@ -222,7 +222,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             handlerName: 'Errors',
             callback: (args) {
               controller.add(
-                controller.value!.copyWith(error: errorEnum(args.first as int)),
+                controller.value.copyWith(error: errorEnum(args.first as int)),
               );
             },
           )
@@ -230,7 +230,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             handlerName: 'VideoData',
             callback: (args) {
               controller.add(
-                controller.value!.copyWith(
+                controller.value.copyWith(
                     metaData: YoutubeMetaData.fromRawData(args.first)),
               );
             },
@@ -241,7 +241,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
               final position = args.first * 1000;
               final num buffered = args.last;
               controller.add(
-                controller.value!.copyWith(
+                controller.value.copyWith(
                   position: Duration(milliseconds: position.floor()),
                   buffered: buffered.toDouble(),
                 ),
@@ -253,7 +253,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
         _onLoadStopCalled = true;
         if (_isPlayerReady) {
           controller.add(
-            controller.value!.copyWith(isReady: true),
+            controller.value.copyWith(isReady: true),
           );
         }
       },
@@ -328,7 +328,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
     </body>
   ''';
 
-  String get userAgent => controller.params!.desktopMode!
+  String get userAgent => controller.params.desktopMode!
       ? 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'
       : 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148';
 }
