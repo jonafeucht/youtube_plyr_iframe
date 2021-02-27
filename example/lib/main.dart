@@ -53,7 +53,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text("Thumbnail Demo"),
+        title: Text("Demo"),
         centerTitle: true,
         automaticallyImplyLeading: true,
         elevation: 0,
