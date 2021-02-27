@@ -1,3 +1,6 @@
+## 1.3.7
+- Fixed Player not displaying correctly
+
 ## 1.3.6+1
 - Added example app
 

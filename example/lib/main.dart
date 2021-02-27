@@ -51,6 +51,13 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text("Thumbnail Demo"),
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+        elevation: 0,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -230,8 +237,8 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
-            // Comment below to stop Autoplay
-            ..play()
+            // Uncomment below to stop Autoplay
+            // ..play()
             ..hideTopMenu();
         }
       });

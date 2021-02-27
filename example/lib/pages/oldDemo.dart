@@ -106,11 +106,11 @@ class _YoutubeAppDemoState extends State<OldDemo> {
     );
   }
 
-  @override
-  void dispose() {
-    _controller.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.close();
+  //   super.dispose();
+  // }
 }
 
 ///
