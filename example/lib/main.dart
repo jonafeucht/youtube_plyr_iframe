@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe_example/pages/oldDemo.dart';
 import 'package:youtube_player_iframe_example/pages/thumbnailDemo.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
@@ -246,18 +249,19 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
             ..hideTopMenu();
         }
       });
+
     // Uncomment below for device orientation
-    // _controller.onEnterFullscreen = () {
+    // _controller!.onEnterFullscreen = () {
     //   SystemChrome.setPreferredOrientations([
     //     DeviceOrientation.landscapeLeft,
     //     DeviceOrientation.landscapeRight,
     //   ]);
     //   log('Entered Fullscreen');
     // };
-    // _controller.onExitFullscreen = () {
+    // _controller!.onExitFullscreen = () {
     //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     //   Future.delayed(const Duration(seconds: 1), () {
-    //     _controller.play();
+    //     _controller!.play();
     //   });
     //   Future.delayed(const Duration(seconds: 5), () {
     //     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
@@ -272,6 +276,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
     return YoutubePlayerControllerProvider(
       controller: _controller!,
       child: AlertDialog(
+        insetPadding: EdgeInsets.all(10),
         backgroundColor: Colors.black,
         content: player,
         contentPadding: EdgeInsets.all(0),
