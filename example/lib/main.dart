@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe_example/pages/oldDemo.dart';
 import 'package:youtube_player_iframe_example/pages/thumbnailDemo.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
@@ -268,6 +271,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
     return YoutubePlayerControllerProvider(
       controller: _controller,
       child: AlertDialog(
+        insetPadding: EdgeInsets.all(10),
         backgroundColor: Colors.black,
         content: player,
         contentPadding: EdgeInsets.all(0),
