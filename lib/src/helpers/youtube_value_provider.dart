@@ -13,17 +13,17 @@ class YoutubePlayerControllerProvider extends InheritedWidget {
 
   /// An inherited widget that provide [YoutubePlayerController] to it's descendants.
   const YoutubePlayerControllerProvider({
-    Key key,
-    @required this.controller,
-    @required Widget child,
-  })  : assert(controller != null),
-        super(key: key, child: child);
+    Key? key,
+    required this.controller,
+    required Widget child,
+  }) : super(key: key, child: child);
 
   /// Finds the most recent [YoutubePlayerController] in its ancestors.
   static YoutubePlayerController of(BuildContext context) {
     final controllerProvider = context
-        .dependOnInheritedWidgetOfExactType<YoutubePlayerControllerProvider>();
+        .dependOnInheritedWidgetOfExactType<YoutubePlayerControllerProvider>()!;
     assert(
+      // ignore: unnecessary_null_comparison
       controllerProvider != null,
       'Cannot find YoutubePlayerControllerProvider above. Please wrap parent widget with YoutubePlayerControllerProvider.',
     );

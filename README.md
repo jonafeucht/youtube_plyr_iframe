@@ -5,26 +5,27 @@ This is a fork of [youtube_player_iframe](https://github.com/sarbagyastha/youtub
 Flutter plugin for playing or streaming YouTube videos inline using the official [**iFrame Player API**](https://developers.google.com/youtube/iframe_api_reference).
 The package exposes almost all the API provided by **iFrame Player API**. So, it's 100% customizable.
 
-Note: This package only provides default youtube web player's skin. If you need Youtube Android player like player with gesture support, use [youtube_player_flutter](https://pub.dartlang.org/packages/youtube_player_flutter) instead.
-`youtube_player_flutter` also uses this package as dependency. (Migration Pending)
-
 Supported Platforms:
 - **Android** 
-- **iOS**
+- **iOS** (Platform design -> eg. Airplay, Captions)
 - **Web**
 
-<img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0"><a href="https://web-example.starhelix.space/"><img src="https://i.ibb.co/DrrcRvq/Web-capture-21-2-2021-175044-web-example-starhelix-space.jpg" alt="web" border="0"></a>
-
-[Click here for WEB DEMO](https://web-example.starhelix.space/)
-
-## Example App
-[<img src="https://itsallwidgets.com/images/google.png" height="70px">](https://play.google.com/store/apps/details?id=space.starhelix.lore.christianity)[<img src="https://chroniken.starhelix.space/dist/images/applestore.svg" height="70px">](https://apps.apple.com/app/id1484833082#?platform=iphone)
+See [Salient Features](https://github.com/jonatadashi/youtube_plyr_iframe/tree/main#salient-features) for more information.
 
 ## Migrating from [youtube_player_iframe](https://pub.dev/packages/youtube_player_iframe)
 1. Replace package in `pubspec.yaml` file. 
 2. Replace `'package:youtube_player_iframe/youtube_player_iframe.dart';` with `'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';`.
 
-For more details see: [https://pub.dev/packages/youtube_plyr_iframe/install](https://pub.dev/packages/youtube_plyr_iframe/install)
+For more details see: [https://pub.dev/packages/youtube_plyr_iframe/install](https://pub.dev/packages/youtube_plyr_iframe/install).
+
+---
+
+<img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0"><a href="https://jonatadashi.github.io/Web-Example/"><img src="https://i.ibb.co/DrrcRvq/Web-capture-21-2-2021-175044-web-example-starhelix-space.jpg" alt="web" border="0"></a>
+
+[Click here for WEB DEMO](https://jonatadashi.github.io/Web-Example/)
+
+## Example App
+[<img src="https://itsallwidgets.com/images/google.png" height="70px">](https://play.google.com/store/apps/details?id=space.starhelix.lore.christianity)[<img src="https://chroniken.starhelix.space/dist/images/applestore.svg" height="70px">](https://apps.apple.com/app/id1484833082#?platform=iphone)
 
 ## Salient Features
 * Inline Playback
@@ -46,8 +47,8 @@ For Android & iOS, the package uses [flutter_inappwebview](https://pub.dartlang.
 Since *flutter_inappwebview* relies on Flutter's mechanism for embedding Android and iOS views, this plugin might share some known issues tagged with the [platform-views](https://github.com/flutter/flutter/labels/a%3A%20platform-views) label.
 
 ## Requirements
-* **Android**: `minSdkVersion 17` and add support for `androidx` (see [AndroidX Migration](https://flutter.dev/docs/development/androidx-migration))
-* **iOS**: `--ios-language swift`, Xcode version `>= 11`
+* **Android**: `minSdkVersion 23` and add support for `androidx` (see [AndroidX Migration](https://flutter.dev/docs/development/androidx-migration))
+* **iOS**: `--ios-language swift`, Xcode version `>= 12`
 * **Web**: None
 
 ## Setup
@@ -61,12 +62,9 @@ No Configuration Required.
 [Follow the guide here for complete iOS setup](https://pub.dev/packages/flutter_inappwebview#important-note-for-ios)
 
 ### Android
-Set `minSdkVersion` of your `android/app/build.gradle` file to at least 17.
+Set `minSdkVersion` of your `android/app/build.gradle` file to at least 23.
 
 [Follow the guide here for complete Android setup](https://pub.dev/packages/flutter_inappwebview#important-note-for-android)
-
-*Note:* Although the minimum to be set is 17, the player won't play on device with API < 20. 
-For API < 20 devices, you might want to forward the video to be played using YouTube app instead, using packages like `url_launcher` or `android_intent`.
 
 #### Using the player
 
@@ -97,6 +95,7 @@ YoutubePlayerControllerProvider( // Provides controller to all the widget below 
 
 // Access the controller as: `YoutubePlayerControllerProvider.of(context)` or `controller.ytController`.
 ```
+Please see [EXAMPLE](https://github.com/jonatadashi/youtube_plyr_iframe/blob/main/example/lib/main.dart) for more details.
 
 ## Want to customize the player?
 The package provides `YoutubeValueBuilder`, which can be used to create any custom controls.
@@ -123,6 +122,7 @@ YoutubeValueBuilder(
    },
 );
 ```
+Please see [EXAMPLE](https://github.com/jonatadashi/youtube_plyr_iframe/blob/main/example/lib/main.dart) for more details.
 
 ## Available Methods
 Methods available for `YoutubePlayerController`.
@@ -180,9 +180,6 @@ strictRelatedVideos        | Enabling ensure that related videos will come from 
 startAt                    | Starts the video at specified time.
 desktopMode                | The controls will be alike Youtube Desktop's controls.
 
-
-## Limitation 
-For Android: Since the plugin is based on platform views. This plugin requires Android API level 20 or greater.
 
 ## License
 ```

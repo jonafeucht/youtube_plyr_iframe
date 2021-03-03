@@ -1,3 +1,17 @@
+## 2.0.0
+- 💪 Running with sound null safety 💪
+- Minor fix
+
+## 2.0.0-nullsafety.3
+- 💪 Running with sound null safety 💪
+
+## 2.0.0-nullsafety.2
+- Relax SDK version constraints.
+- Android `minSdkVersion 23` is required.
+
+## 2.0.0-nullsafety.1
+- 💪 Running with sound null safety 💪 (Almost)
+
 ## 1.3.6+1
 - Added example app
 
@@ -8,8 +22,8 @@
 - Added migration guide
 
 ## 1.3.3
-- Fix "type 'int' is not a subtype of type 'double' in type cast"
-- Fix "The Flutter constraint should not have an upper bound."
+- Fix `type 'int' is not a subtype of type 'double' in type cast`
+- Fix `The Flutter constraint should not have an upper bound.`
 
 ## 1.3.2+1
 - Fix homepage and repo page
