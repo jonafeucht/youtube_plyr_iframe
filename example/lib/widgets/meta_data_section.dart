@@ -13,7 +13,7 @@ class MetaDataSection extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Text('Title', value.metaData.title),
+          _Text('Title', value!.metaData.title),
           const SizedBox(height: 10),
           _Text('Channel', value.metaData.author),
           const SizedBox(height: 10),
@@ -33,7 +33,7 @@ class MetaDataSection extends StatelessWidget {
               YoutubeValueBuilder(
                 builder: (context, value) {
                   return DropdownButton(
-                    value: value.playbackRate,
+                    value: value!.playbackRate,
                     isDense: true,
                     underline: const SizedBox(),
                     items: PlaybackRate.all
@@ -64,7 +64,7 @@ class MetaDataSection extends StatelessWidget {
 
 class _Text extends StatelessWidget {
   final String title;
-  final String value;
+  final String? value;
 
   const _Text(this.title, this.value);
 
@@ -79,7 +79,7 @@ class _Text extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: value ?? '',
+            text: value,
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.w300,

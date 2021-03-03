@@ -56,7 +56,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text("Thumbnail Demo"),
+        title: Text("Demo"),
         centerTitle: true,
         automaticallyImplyLeading: true,
         elevation: 0,
@@ -172,6 +172,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
@@ -188,6 +189,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
@@ -212,51 +214,54 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
 }
 
 class YoutubeViewer extends StatefulWidget {
-  final String videoID;
+  final String? videoID;
   YoutubeViewer(this.videoID);
   @override
   _YoutubeViewerState createState() => _YoutubeViewerState();
 }
 
 class _YoutubeViewerState extends State<YoutubeViewer> {
-  YoutubePlayerController _controller;
+  // ignore: close_sinks
+  YoutubePlayerController? _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: widget.videoID,
+      initialVideoId: widget.videoID!,
       params: YoutubePlayerParams(
         showControls: true,
         showFullscreenButton: true,
-        desktopMode: false,
+        desktopMode: false, // false for platform design
         autoPlay: false,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
+        privacyEnhanced: true,
         playsInline: false, // iOS only
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller
+          _controller!
             ..hidePauseOverlay()
             // Uncomment below to stop Autoplay
             // ..play()
             ..hideTopMenu();
         }
       });
+
     // Uncomment below for device orientation
-    // _controller.onEnterFullscreen = () {
+    // _controller!.onEnterFullscreen = () {
     //   SystemChrome.setPreferredOrientations([
     //     DeviceOrientation.landscapeLeft,
     //     DeviceOrientation.landscapeRight,
     //   ]);
     //   log('Entered Fullscreen');
     // };
-    // _controller.onExitFullscreen = () {
+    // _controller!.onExitFullscreen = () {
     //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     //   Future.delayed(const Duration(seconds: 1), () {
-    //     _controller.play();
+    //     _controller!.play();
     //   });
     //   Future.delayed(const Duration(seconds: 5), () {
     //     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
@@ -269,7 +274,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
   Widget build(BuildContext context) {
     final player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
-      controller: _controller,
+      controller: _controller!,
       child: AlertDialog(
         insetPadding: EdgeInsets.all(10),
         backgroundColor: Colors.black,
@@ -330,6 +335,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: widget.videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
@@ -346,6 +352,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                           child: new Image.network(
                             YoutubePlayerController.getThumbnail(
                                 videoId: widget.videoID,
+                                // todo: get thumbnail quality from list
                                 quality: ThumbnailQuality.max,
                                 webp: false),
                             fit: BoxFit.fill,
