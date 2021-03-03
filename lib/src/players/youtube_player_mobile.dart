@@ -232,7 +232,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             callback: (args) {
               controller!.add(
                 controller!.value
-                    .copyWith(error: errorEnum(args.first as int?)),
+                    .copyWith(error: errorEnum((args.first as int?)!)),
               );
             },
           )

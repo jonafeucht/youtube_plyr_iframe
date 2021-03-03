@@ -1,3 +1,7 @@
+## 2.0.0
+- 💪 Running with sound null safety 💪
+- Minor fix
+
 ## 2.0.0-nullsafety.3
 - 💪 Running with sound null safety 💪
 
