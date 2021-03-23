@@ -219,6 +219,11 @@ class YoutubeViewer extends StatefulWidget {
 
 class _YoutubeViewerState extends State<YoutubeViewer> {
   late YoutubePlayerController _controller;
+  @override
+  void dispose() {
+    _controller.showTopMenu();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -240,12 +245,10 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
+
+            // Uncomment below to stop Autoplay
+            // ..play()
             ..hideTopMenu();
-          // Uncomment below to stop Autoplay
-          // ..play()
-          Future.delayed(const Duration(seconds: 5), () {
-            context.ytController.showTopMenu();
-          });
         }
       });
 
