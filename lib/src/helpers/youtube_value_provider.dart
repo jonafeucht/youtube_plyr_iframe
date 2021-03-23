@@ -27,7 +27,7 @@ class YoutubePlayerControllerProvider extends InheritedWidget {
       controllerProvider != null,
       'Cannot find YoutubePlayerControllerProvider above. Please wrap parent widget with YoutubePlayerControllerProvider.',
     );
-    return controllerProvider!.controller;
+    return controllerProvider.controller;
   }
 
   @override
