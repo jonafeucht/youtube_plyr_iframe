@@ -17,7 +17,9 @@ See [Salient Features](https://github.com/jonatadashi/youtube_plyr_iframe/tree/m
 2. Replace `'package:youtube_player_iframe/youtube_player_iframe.dart';` with `'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';`.
 
 For more details see: [https://pub.dev/packages/youtube_plyr_iframe/install](https://pub.dev/packages/youtube_plyr_iframe/install).
+
 ---
+
 <img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0"><a href="https://jonatadashi.github.io/Web-Example/"><img src="https://i.ibb.co/DrrcRvq/Web-capture-21-2-2021-175044-web-example-starhelix-space.jpg" alt="web" border="0"></a>
 
 [Click here for WEB DEMO](https://jonatadashi.github.io/Web-Example/)

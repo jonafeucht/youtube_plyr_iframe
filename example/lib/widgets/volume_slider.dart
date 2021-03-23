@@ -20,7 +20,7 @@ class VolumeSlider extends StatelessWidget {
         Expanded(
           child: ValueListenableBuilder(
             valueListenable: _volume,
-            builder: (context, volume, _) {
+            builder: (context, dynamic volume, _) {
               return Slider(
                 inactiveColor: Colors.transparent,
                 value: volume.toDouble(),
