@@ -120,6 +120,10 @@ function hideTopMenu() {
   try { document.querySelector('#player').contentDocument.querySelector('.ytp-chrome-top').style.display = 'none'; } catch(e) { }
   return '';
 }
+function showTopMenu() {
+  try { document.querySelector('#player').contentDocument.querySelector('.ytp-chrome-top').style.display = ''; } catch(e) { }
+  return '';
+}
 function hidePauseOverlay() {
   try { document.querySelector('#player').contentDocument.querySelector('.ytp-pause-overlay').style.display = 'none'; } catch(e) { }
   return '';

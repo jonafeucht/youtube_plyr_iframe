@@ -219,7 +219,7 @@ class YoutubeViewer extends StatefulWidget {
 }
 
 class _YoutubeViewerState extends State<YoutubeViewer> {
-  YoutubePlayerController _controller;
+  late YoutubePlayerController _controller;
 
   @override
   void initState() {
@@ -240,9 +240,12 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
-            // Uncomment below to stop Autoplay
-            // ..play()
             ..hideTopMenu();
+          // Uncomment below to stop Autoplay
+          // ..play()
+          Future.delayed(const Duration(seconds: 5), () {
+            context.ytController.showTopMenu();
+          });
         }
       });
     // Uncomment below for device orientation
@@ -269,7 +272,8 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
   Widget build(BuildContext context) {
     final player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
-      controller: _controller,
+      key: UniqueKey(),
+      controller: _controller!,
       child: AlertDialog(
         insetPadding: EdgeInsets.all(10),
         backgroundColor: Colors.black,

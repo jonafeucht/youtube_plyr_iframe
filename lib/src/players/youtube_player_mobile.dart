@@ -127,16 +127,6 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
         ),
         android: AndroidInAppWebViewOptions(useWideViewPort: false),
       ),
-      shouldOverrideUrlLoading: (_, detail) async {
-        final uri = Uri.parse(detail.url);
-        final feature = uri.queryParameters['feature'];
-        if (feature == 'emb_rel_pause') {
-          controller.load(uri.queryParameters['v']);
-        } else {
-          return ShouldOverrideUrlLoadingAction.ALLOW;
-        }
-        return ShouldOverrideUrlLoadingAction.CANCEL;
-      },
       onWebViewCreated: (webController) {
         if (!_webController.isCompleted) {
           _webController.complete(webController);
