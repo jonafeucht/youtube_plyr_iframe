@@ -16,8 +16,7 @@ class OldDemo extends StatefulWidget {
 }
 
 class _YoutubeAppDemoState extends State<OldDemo> {
-  // ignore: close_sinks
-  YoutubePlayerController? _controller;
+  late YoutubePlayerController _controller;
 
   @override
   void initState() {
@@ -44,7 +43,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller!
+          _controller
             ..hidePauseOverlay()
             ..hideTopMenu();
         }
@@ -74,7 +73,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
     const player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
       // Passing controller to widgets below.
-      controller: _controller!,
+      controller: _controller,
       child: YoutubeValueBuilder(
         key: UniqueKey(),
         builder: (context, value) {
