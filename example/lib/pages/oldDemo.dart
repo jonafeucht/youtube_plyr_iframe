@@ -78,9 +78,9 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         key: UniqueKey(),
         builder: (context, value) {
           if (value!.isReady && !value.hasPlayed) {
-            // Timer(Duration(seconds: 5), () {
-            //   _controller!.showTopMenu();
-            // });
+            Timer(Duration(seconds: 5), () {
+              _controller.showTopMenu();
+            });
           }
           return Scaffold(
             appBar: AppBar(
