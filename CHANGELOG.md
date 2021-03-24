@@ -1,3 +1,7 @@
+## 2.0.1
+- Fix `Unhandled Exception: Null check operator used on a null value`
+Added showTopMenu as requested in [#12](https://github.com/jonatadashi/youtube_plyr_iframe/issues/12).
+
 ## 2.0.0
 - 💪 Running with sound null safety 💪
 - Minor fix
@@ -11,6 +15,9 @@
 
 ## 2.0.0-nullsafety.1
 - 💪 Running with sound null safety 💪 (Almost)
+
+## 1.3.7
+- Fixed on pause not displaying correctly
 
 ## 1.3.6+1
 - Added example app

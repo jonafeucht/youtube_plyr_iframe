@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe_example/pages/oldDemo.dart';
 import 'package:youtube_player_iframe_example/pages/thumbnailDemo.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
@@ -221,8 +218,12 @@ class YoutubeViewer extends StatefulWidget {
 }
 
 class _YoutubeViewerState extends State<YoutubeViewer> {
-  // ignore: close_sinks
-  YoutubePlayerController? _controller;
+  late YoutubePlayerController _controller;
+  @override
+  void dispose() {
+    _controller.showTopMenu();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -242,8 +243,9 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller!
+          _controller
             ..hidePauseOverlay()
+
             // Uncomment below to stop Autoplay
             // ..play()
             ..hideTopMenu();
@@ -274,7 +276,8 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
   Widget build(BuildContext context) {
     final player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
-      controller: _controller!,
+      key: UniqueKey(),
+      controller: _controller,
       child: AlertDialog(
         insetPadding: EdgeInsets.all(10),
         backgroundColor: Colors.black,

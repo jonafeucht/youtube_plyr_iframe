@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe_example/widgets/meta_data_section.dart';
@@ -14,8 +16,7 @@ class OldDemo extends StatefulWidget {
 }
 
 class _YoutubeAppDemoState extends State<OldDemo> {
-  // ignore: close_sinks
-  YoutubePlayerController? _controller;
+  late YoutubePlayerController _controller;
 
   @override
   void initState() {
@@ -42,10 +43,8 @@ class _YoutubeAppDemoState extends State<OldDemo> {
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller!
+          _controller
             ..hidePauseOverlay()
-            // Uncomment below to start autoplay on iOS
-            //..play()
             ..hideTopMenu();
         }
       });
@@ -74,44 +73,54 @@ class _YoutubeAppDemoState extends State<OldDemo> {
     const player = YoutubePlayerIFrame();
     return YoutubePlayerControllerProvider(
       // Passing controller to widgets below.
-      controller: _controller!,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Youtube Plyr Demo'),
-        ),
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            if (kIsWeb && constraints.maxWidth > 800) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Expanded(child: player),
-                  const SizedBox(
-                    width: 500,
-                    child: SingleChildScrollView(
-                      child: Controls(),
-                    ),
-                  ),
-                ],
-              );
-            }
-            return ListView(
-              children: [
-                player,
-                const Controls(),
-              ],
-            );
-          },
-        ),
+      controller: _controller,
+      child: YoutubeValueBuilder(
+        key: UniqueKey(),
+        builder: (context, value) {
+          if (value!.isReady && !value.hasPlayed) {
+            Timer(Duration(seconds: 5), () {
+              _controller.showTopMenu();
+            });
+          }
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Youtube Plyr Demo'),
+            ),
+            body: LayoutBuilder(
+              builder: (context, constraints) {
+                if (kIsWeb && constraints.maxWidth > 800) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Expanded(child: player),
+                      const SizedBox(
+                        width: 500,
+                        child: SingleChildScrollView(
+                          child: Controls(),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+                return ListView(
+                  children: [
+                    player,
+                    const Controls(),
+                  ],
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
 
-  // @override
-  // void dispose() {
-  //   _controller.close();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _controller.showTopMenu();
+    super.dispose();
+  }
 }
 
 ///

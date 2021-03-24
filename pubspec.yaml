@@ -1,11 +1,11 @@
 name: youtube_plyr_iframe
 description: Fork of Youtube Player Iframe. Supports web & mobile platforms.
-version: 2.0.0
+version: 2.0.1
 repository: https://github.com/jonatadashi/youtube_plyr_iframe
 homepage: https://github.com/jonatadashi/youtube_plyr_iframe
 
 environment:
-  sdk: '>=2.12.0-0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
   flutter: '>=1.22.0'
 
 dependencies:
