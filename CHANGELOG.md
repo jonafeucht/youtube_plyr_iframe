@@ -1,6 +1,12 @@
+## 2.0.2
+- Bumped up flutter_inappwebview which should fix `Unhandled Exception: MissingPluginException`.
+- Added useHybridComposition.
+- Added documentation on how to load thumbnails.
+- Fix [#18](https://github.com/jonatadashi/youtube_plyr_iframe/issues/18).
+
 ## 2.0.1
 - Fix `Unhandled Exception: Null check operator used on a null value`
-Added showTopMenu as requested in [#12](https://github.com/jonatadashi/youtube_plyr_iframe/issues/12).
+- Added showTopMenu as requested in [#12](https://github.com/jonatadashi/youtube_plyr_iframe/issues/12).
 
 ## 2.0.0
 - 💪 Running with sound null safety 💪

@@ -54,7 +54,17 @@ Since *flutter_inappwebview* relies on Flutter's mechanism for embedding Android
 ## Setup
 
 ### Web
-No Configuration Required.
+No Configuration required, if developing without the need to load thumbnails. (Inline thumbnails will still load.)
+
+To load thumbnails the HTML renderer is needed.
+
+- Run: `flutter run -d chrome --web-renderer html`
+- Build: `flutter build web --web-renderer html --profile`
+
+Read for more information:
+- [Web renderers](https://flutter.dev/docs/development/tools/web-renderers)
+- [Displaying images on the web
+](https://flutter.dev/docs/development/platform-integration/web-images)
 
 ### iOS
 No Configuration Required.

@@ -94,9 +94,11 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
       key: ValueKey(controller.hashCode),
       initialData: InAppWebViewInitialData(
         data: player,
-        baseUrl: controller!.params.privacyEnhanced
-            ? Uri.parse('https://www.youtube-nocookie.com')
-            : Uri.parse('https://www.youtube.com'),
+        baseUrl: Uri.parse(
+          controller!.params.privacyEnhanced
+              ? 'https://www.youtube-nocookie.com'
+              : 'https://www.youtube.com',
+        ),
         encoding: 'utf-8',
         mimeType: 'text/html',
       ),
@@ -125,7 +127,10 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
           allowsAirPlayForMediaPlayback: true,
           allowsPictureInPictureMediaPlayback: true,
         ),
-        android: AndroidInAppWebViewOptions(useWideViewPort: false),
+        android: AndroidInAppWebViewOptions(
+          useWideViewPort: false,
+          useHybridComposition: controller!.params.useHybridComposition,
+        ),
       ),
       onWebViewCreated: (webController) {
         if (!_webController.isCompleted) {

@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe_example/widgets/meta_data_section.dart';
 import 'package:youtube_player_iframe_example/widgets/play_pause_button_bar.dart';
 import 'package:youtube_player_iframe_example/widgets/player_state_section.dart';
@@ -22,10 +24,10 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: '5qap5aO4i9A', // livestream example
+      initialVideoId: 'Twc3c_9Wg6o', // livestream example
       params: YoutubePlayerParams(
         playlist: [
-          'F1B9Fk_SgI0',
+          'Twc3c_9Wg6o',
           "MnrJzXM7a6o",
           "FTQbiNvZqaY",
           "iYKXdt0LRs8",
@@ -33,7 +35,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
         showFullscreenButton: true,
-        desktopMode: false, // false for platform design
+        desktopMode: false, // true for youtube design
         autoPlay: false,
         enableCaption: true,
         showVideoAnnotations: false,
@@ -43,29 +45,13 @@ class _YoutubeAppDemoState extends State<OldDemo> {
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller
-            ..hidePauseOverlay()
-            ..hideTopMenu();
+          _controller..hidePauseOverlay();
+          //..play()
+          Timer(Duration(seconds: 5), () {
+            _controller.hideTopMenu();
+          });
         }
       });
-    //Uncomment below for auto rotation on fullscreen
-    // _controller.onEnterFullscreen = () {
-    //   SystemChrome.setPreferredOrientations([
-    //     DeviceOrientation.landscapeLeft,
-    //     DeviceOrientation.landscapeRight,
-    //   ]);
-    //   log('Entered Fullscreen');
-    // };
-    // _controller.onExitFullscreen = () {
-    //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    //   Future.delayed(const Duration(seconds: 1), () {
-    //     _controller.play();
-    //   });
-    //   Future.delayed(const Duration(seconds: 5), () {
-    //     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    //   });
-    //   log('Exited Fullscreen');
-    // };
   }
 
   @override
@@ -78,13 +64,17 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         key: UniqueKey(),
         builder: (context, value) {
           if (value!.isReady && !value.hasPlayed) {
-            Timer(Duration(seconds: 5), () {
+            Timer(Duration(seconds: 30), () {
               _controller.showTopMenu();
             });
           }
           return Scaffold(
+            backgroundColor: Colors.black,
             appBar: AppBar(
-              title: const Text('Youtube Plyr Demo'),
+              backgroundColor: Colors.black,
+              elevation: 0,
+              brightness: Brightness.dark,
+              title: const Text('Inline Demo'),
             ),
             body: LayoutBuilder(
               builder: (context, constraints) {

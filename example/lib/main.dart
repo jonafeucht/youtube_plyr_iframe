@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe_example/pages/oldDemo.dart';
@@ -72,7 +74,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                     Row(
                       children: [
                         ElevatedButton(
-                          child: Text("Old Demo"),
+                          child: Text("Inline Demo"),
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => OldDemo()),
@@ -239,37 +241,19 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         showVideoAnnotations: false,
         enableJavaScript: true,
         privacyEnhanced: true,
+        useHybridComposition: true,
         playsInline: false, // iOS only
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller
-            ..hidePauseOverlay()
-
-            // Uncomment below to stop Autoplay
-            // ..play()
-            ..hideTopMenu();
+          _controller..hidePauseOverlay();
+          // Uncomment below to stop Autoplay
+          // ..play()
+          Timer(Duration(seconds: 5), () {
+            _controller.hideTopMenu();
+          });
         }
       });
-
-    // Uncomment below for device orientation
-    // _controller!.onEnterFullscreen = () {
-    //   SystemChrome.setPreferredOrientations([
-    //     DeviceOrientation.landscapeLeft,
-    //     DeviceOrientation.landscapeRight,
-    //   ]);
-    //   log('Entered Fullscreen');
-    // };
-    // _controller!.onExitFullscreen = () {
-    //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    //   Future.delayed(const Duration(seconds: 1), () {
-    //     _controller!.play();
-    //   });
-    //   Future.delayed(const Duration(seconds: 5), () {
-    //     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    //   });
-    //   log('Exited Fullscreen');
-    // };
   }
 
   @override
