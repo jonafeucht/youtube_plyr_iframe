@@ -233,7 +233,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
         showFullscreenButton: true,
-        desktopMode: true,
+        desktopMode: false,
         autoPlay: true,
         enableCaption: true,
         showVideoAnnotations: false,

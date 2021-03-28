@@ -1,16 +1,13 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
-
 import '../widgets/meta_data_section.dart';
 import '../widgets/play_pause_button_bar.dart';
 import '../widgets/player_state_section.dart';
 import '../widgets/source_input_section.dart';
 import '../widgets/volume_slider.dart';
 
-///
 class OldDemo extends StatefulWidget {
   @override
   _YoutubeAppDemoState createState() => _YoutubeAppDemoState();
@@ -23,31 +20,32 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: 'Twc3c_9Wg6o', // livestream example
+      initialVideoId: 'RCQRCTnDYXo', // livestream example
       params: YoutubePlayerParams(
         playlist: [
-          'Twc3c_9Wg6o',
+          'RCQRCTnDYXo',
           "MnrJzXM7a6o",
           "FTQbiNvZqaY",
           "iYKXdt0LRs8",
         ],
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
-        showFullscreenButton: true,
-        desktopMode: true, // true for youtube design
+        showFullscreenButton: false,
+        desktopMode: false, // true for youtube design
         autoPlay: false,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
         privacyEnhanced: true,
         useHybridComposition: true,
-        playsInline: true, // iOS only - Auto fullscreen or not
+        playsInline: false, // iOS only - Auto fullscreen or not
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
-            ..showTopMenu();
+            //..play()
+            ..hideTopMenu();
         }
       });
   }
@@ -58,58 +56,48 @@ class _YoutubeAppDemoState extends State<OldDemo> {
     return YoutubePlayerControllerProvider(
       // Passing controller to widgets below.
       controller: _controller,
-      child: YoutubeValueBuilder(
-        key: UniqueKey(),
-        builder: (context, value) {
-          if (value!.isReady && !value.hasPlayed) {
-            Timer(Duration(seconds: 5), () {
-              _controller.hideTopMenu();
-            });
-          }
-          return Scaffold(
-            backgroundColor: Colors.black,
-            appBar: AppBar(
-              backgroundColor: Colors.black,
-              elevation: 0,
-              brightness: Brightness.dark,
-              title: const Text('Inline Demo'),
-            ),
-            body: LayoutBuilder(
-              builder: (context, constraints) {
-                if (kIsWeb && constraints.maxWidth > 800) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Expanded(child: player),
-                      const SizedBox(
-                        width: 500,
-                        child: SingleChildScrollView(
-                          child: Controls(),
-                        ),
-                      ),
-                    ],
-                  );
-                }
-                return ListView(
-                  children: [
-                    player,
-                    Container(
-                      height: 10,
-                      color: Colors.black,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          elevation: 0,
+          brightness: Brightness.dark,
+          title: const Text('Inline Demo'),
+        ),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            if (kIsWeb && constraints.maxWidth > 800) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Expanded(child: player),
+                  const SizedBox(
+                    width: 500,
+                    child: SingleChildScrollView(
+                      child: Controls(),
                     ),
-                    const Controls(),
-                  ],
-                );
-              },
-            ),
-          );
-        },
+                  ),
+                ],
+              );
+            }
+            return ListView(
+              children: [
+                player,
+                Container(
+                  height: 10,
+                  color: Theme.of(context).primaryColor,
+                ),
+                const Controls(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
 
   @override
   void dispose() {
+    _controller.showTopMenu();
     super.dispose();
   }
 }

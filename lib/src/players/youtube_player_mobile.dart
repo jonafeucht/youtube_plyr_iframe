@@ -89,68 +89,72 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
 
   @override
   Widget build(BuildContext context) {
-    return InAppWebView(
-      key: ValueKey(controller.hashCode),
-      initialData: InAppWebViewInitialData(
-        data: player,
-        baseUrl: Uri.parse(
-          controller.params.privacyEnhanced
-              ? 'https://www.youtube-nocookie.com'
-              : 'https://www.youtube.com',
+    return Container(
+      color: Colors.black,
+      child: InAppWebView(
+        key: ValueKey(controller.hashCode),
+        initialData: InAppWebViewInitialData(
+          data: player,
+          baseUrl: Uri.parse(
+            controller.params.privacyEnhanced
+                ? 'https://www.youtube-nocookie.com'
+                : 'https://www.youtube.com',
+          ),
+          encoding: 'utf-8',
+          mimeType: 'text/html',
         ),
-        encoding: 'utf-8',
-        mimeType: 'text/html',
+        gestureRecognizers: widget.gestureRecognizers ??
+            {
+              Factory<VerticalDragGestureRecognizer>(
+                () => VerticalDragGestureRecognizer(),
+              ),
+              Factory<HorizontalDragGestureRecognizer>(
+                () => HorizontalDragGestureRecognizer(),
+              ),
+            },
+        initialOptions: InAppWebViewGroupOptions(
+          crossPlatform: InAppWebViewOptions(
+            userAgent: userAgent,
+            mediaPlaybackRequiresUserGesture: false,
+            transparentBackground: true,
+            disableContextMenu: true,
+            supportZoom: false,
+            disableHorizontalScroll: false,
+            disableVerticalScroll: true,
+            useShouldOverrideUrlLoading: false,
+          ),
+          ios: IOSInAppWebViewOptions(
+            disableLongPressContextMenuOnLinks: true,
+            allowsInlineMediaPlayback: true,
+            allowsAirPlayForMediaPlayback: true,
+            allowsPictureInPictureMediaPlayback: true,
+          ),
+          android: AndroidInAppWebViewOptions(
+            useWideViewPort: false,
+            useHybridComposition: controller.params.useHybridComposition,
+          ),
+        ),
+        onWebViewCreated: (webController) {
+          if (!_webController.isCompleted) {
+            _webController.complete(webController);
+          }
+          controller.invokeJavascript = _callMethod;
+          _addHandlers(webController);
+        },
+        onLoadStop: (_, __) {
+          _onLoadStopCalled = true;
+          if (_isPlayerReady) {
+            controller.add(
+              controller.value.copyWith(isReady: true),
+            );
+          }
+        },
+        onConsoleMessage: (_, message) {
+          log(message.message);
+        },
+        onEnterFullscreen: (_) => controller.onEnterFullscreen?.call(),
+        onExitFullscreen: (_) => controller.onExitFullscreen?.call(),
       ),
-      gestureRecognizers: widget.gestureRecognizers ??
-          {
-            Factory<VerticalDragGestureRecognizer>(
-              () => VerticalDragGestureRecognizer(),
-            ),
-            Factory<HorizontalDragGestureRecognizer>(
-              () => HorizontalDragGestureRecognizer(),
-            ),
-          },
-      initialOptions: InAppWebViewGroupOptions(
-        crossPlatform: InAppWebViewOptions(
-          userAgent: userAgent,
-          mediaPlaybackRequiresUserGesture: false,
-          transparentBackground: true,
-          disableContextMenu: true,
-          supportZoom: false,
-          disableHorizontalScroll: false,
-          disableVerticalScroll: false,
-          useShouldOverrideUrlLoading: false,
-        ),
-        ios: IOSInAppWebViewOptions(
-          allowsInlineMediaPlayback: true,
-          allowsAirPlayForMediaPlayback: true,
-          allowsPictureInPictureMediaPlayback: true,
-        ),
-        android: AndroidInAppWebViewOptions(
-          useWideViewPort: false,
-          useHybridComposition: controller.params.useHybridComposition,
-        ),
-      ),
-      onWebViewCreated: (webController) {
-        // if (!_webController.isCompleted) {
-        //   _webController.complete(webController);
-        // }
-        controller.invokeJavascript = _callMethod;
-        _addHandlers(webController);
-      },
-      onLoadStop: (_, __) {
-        _onLoadStopCalled = true;
-        if (_isPlayerReady) {
-          controller.add(
-            controller.value.copyWith(isReady: true),
-          );
-        }
-      },
-      onConsoleMessage: (_, message) {
-        log(message.message);
-      },
-      onEnterFullscreen: (_) => controller.onEnterFullscreen?.call(),
-      onExitFullscreen: (_) => controller.onExitFullscreen?.call(),
     );
   }
 
