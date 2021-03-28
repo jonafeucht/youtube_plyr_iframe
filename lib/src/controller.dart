@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
+
 import 'enums/player_state.dart';
 import 'enums/playlist_type.dart';
 import 'enums/thumbnail_quality.dart';
@@ -251,7 +252,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
       invokeJavascript('setSize(${size.width}, ${size.height})');
 
   /// Sets the playback speed for the video.
-  void setPlaybackRate(double rate) =>
+  void setPlaybackRate(double? rate) =>
       invokeJavascript('setPlaybackRate($rate)');
 
   /// This function indicates whether the video player should continuously play a playlist

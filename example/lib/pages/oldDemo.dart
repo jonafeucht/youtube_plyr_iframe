@@ -47,9 +47,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
-            ..
-                //..play()
-                showTopMenu();
+            ..showTopMenu();
         }
       });
   }
@@ -63,7 +61,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
       child: YoutubeValueBuilder(
         key: UniqueKey(),
         builder: (context, value) {
-          if (value.isReady && !value.hasPlayed) {
+          if (value!.isReady && !value.hasPlayed) {
             Timer(Duration(seconds: 5), () {
               _controller.hideTopMenu();
             });
@@ -112,7 +110,6 @@ class _YoutubeAppDemoState extends State<OldDemo> {
 
   @override
   void dispose() {
-    _controller.showTopMenu();
     super.dispose();
   }
 }

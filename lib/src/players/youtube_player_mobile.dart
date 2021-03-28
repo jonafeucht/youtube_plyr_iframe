@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
@@ -11,7 +12,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:youtube_plyr_iframe/src/enums/youtube_error.dart';
 import 'package:youtube_plyr_iframe/src/helpers/player_fragments.dart';
-import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 import '../controller.dart';
 import '../enums/player_state.dart';
@@ -22,7 +22,7 @@ import '../meta_data.dart';
 /// Use [YoutubePlayerIFrame] instead.
 class RawYoutubePlayer extends StatefulWidget {
   /// The [YoutubePlayerController].
-  final YoutubePlayerController? controller;
+  final YoutubePlayerController controller;
 
   /// Which gestures should be consumed by the youtube player.
   ///
@@ -38,7 +38,7 @@ class RawYoutubePlayer extends StatefulWidget {
   /// Creates a [RawYoutubePlayer] widget.
   const RawYoutubePlayer({
     Key? key,
-    this.controller,
+    required this.controller,
     this.gestureRecognizers,
   }) : super(key: key);
 
@@ -48,8 +48,8 @@ class RawYoutubePlayer extends StatefulWidget {
 
 class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
     with WidgetsBindingObserver {
-  YoutubePlayerController? controller;
-  //late Completer<InAppWebViewController> _webController;
+  late final YoutubePlayerController controller;
+  late final Completer<InAppWebViewController> _webController;
   PlayerState? _cachedPlayerState;
   bool _isPlayerReady = false;
   bool _onLoadStopCalled = false;
@@ -57,14 +57,14 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
   @override
   void initState() {
     super.initState();
-    //_webController = Completer();
+    _webController = Completer();
     controller = widget.controller;
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
 
@@ -74,14 +74,14 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
       case AppLifecycleState.resumed:
         if (_cachedPlayerState != null &&
             _cachedPlayerState == PlayerState.playing) {
-          controller?.play();
+          controller.play();
         }
         break;
       case AppLifecycleState.inactive:
         break;
       case AppLifecycleState.paused:
-        _cachedPlayerState = controller!.value.playerState;
-        controller?.pause();
+        _cachedPlayerState = controller.value.playerState;
+        controller.pause();
         break;
       default:
     }
@@ -94,7 +94,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
       initialData: InAppWebViewInitialData(
         data: player,
         baseUrl: Uri.parse(
-          controller!.params.privacyEnhanced
+          controller.params.privacyEnhanced
               ? 'https://www.youtube-nocookie.com'
               : 'https://www.youtube.com',
         ),
@@ -128,164 +128,157 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
         ),
         android: AndroidInAppWebViewOptions(
           useWideViewPort: false,
-          useHybridComposition: controller!.params.useHybridComposition,
+          useHybridComposition: controller.params.useHybridComposition,
         ),
       ),
       onWebViewCreated: (webController) {
         // if (!_webController.isCompleted) {
         //   _webController.complete(webController);
         // }
-        // controller!.invokeJavascript = _callMethod;
-
-        webController
-          ..addJavaScriptHandler(
-            handlerName: 'Ready',
-            callback: (_) {
-              _isPlayerReady = true;
-              if (_onLoadStopCalled) {
-                controller!.add(
-                  controller!.value.copyWith(isReady: true),
-                );
-              }
-            },
-          )
-          ..addJavaScriptHandler(
-            handlerName: 'StateChange',
-            callback: (args) {
-              switch (args.first as int?) {
-                case -1:
-                  controller!.add(
-                    controller!.value.copyWith(
-                      playerState: PlayerState.unStarted,
-                      isReady: true,
-                    ),
-                  );
-                  break;
-                case 0:
-                  controller!.add(
-                    controller!.value.copyWith(
-                      playerState: PlayerState.ended,
-                    ),
-                  );
-                  break;
-                case 1:
-                  controller!.add(
-                    controller!.value.copyWith(
-                      playerState: PlayerState.playing,
-                      hasPlayed: true,
-                      error: YoutubeError.none,
-                    ),
-                  );
-                  break;
-                case 2:
-                  controller!.add(
-                    controller!.value.copyWith(
-                      playerState: PlayerState.paused,
-                    ),
-                  );
-                  break;
-                case 3:
-                  controller!.add(
-                    controller!.value.copyWith(
-                      playerState: PlayerState.buffering,
-                    ),
-                  );
-                  break;
-                case 5:
-                  controller!.add(
-                    controller!.value.copyWith(
-                      playerState: PlayerState.cued,
-                    ),
-                  );
-                  break;
-                default:
-                  throw Exception("Invalid player state obtained.");
-              }
-            },
-          )
-          ..addJavaScriptHandler(
-            handlerName: 'PlaybackQualityChange',
-            callback: (args) {
-              controller!.add(
-                controller!.value
-                    .copyWith(playbackQuality: args.first as String?),
-              );
-            },
-          )
-          ..addJavaScriptHandler(
-            handlerName: 'PlaybackRateChange',
-            callback: (args) {
-              final num rate = args.first;
-              controller!.add(
-                controller!.value.copyWith(playbackRate: rate.toDouble()),
-              );
-            },
-          )
-          ..addJavaScriptHandler(
-            handlerName: 'Errors',
-            callback: (args) {
-              controller!.add(
-                controller!.value
-                    .copyWith(error: errorEnum((args.first as int?)!)),
-              );
-            },
-          )
-          ..addJavaScriptHandler(
-            handlerName: 'VideoData',
-            callback: (args) {
-              controller!.add(
-                controller!.value.copyWith(
-                    metaData: YoutubeMetaData.fromRawData(args.first)),
-              );
-            },
-          )
-          ..addJavaScriptHandler(
-            handlerName: 'VideoTime',
-            callback: (args) {
-              final position = args.first * 1000;
-              final num buffered = args.last;
-              controller!.add(
-                controller!.value.copyWith(
-                  position: Duration(milliseconds: position.floor()),
-                  buffered: buffered.toDouble(),
-                ),
-              );
-            },
-          );
+        controller.invokeJavascript = _callMethod;
+        _addHandlers(webController);
       },
       onLoadStop: (_, __) {
         _onLoadStopCalled = true;
         if (_isPlayerReady) {
-          controller!.add(
-            controller!.value.copyWith(isReady: true),
+          controller.add(
+            controller.value.copyWith(isReady: true),
           );
         }
       },
       onConsoleMessage: (_, message) {
         log(message.message);
       },
-      onEnterFullscreen: (_) {
-        if (controller!.onEnterFullscreen != null) {
-          controller!.onEnterFullscreen!();
-        }
-      },
-      onExitFullscreen: (_) {
-        if (controller!.onExitFullscreen != null) {
-          controller!.onExitFullscreen!();
-        }
-      },
+      onEnterFullscreen: (_) => controller.onEnterFullscreen?.call(),
+      onExitFullscreen: (_) => controller.onExitFullscreen?.call(),
     );
   }
 
-  // Future<void> _callMethod(String methodName) async {
-  //   final webController = await _webController.future;
-  //   webController.evaluateJavascript(source: methodName);
-  // }
+  Future<void> _callMethod(String methodName) async {
+    final webController = await _webController.future;
+    webController.evaluateJavascript(source: methodName);
+  }
+
+  void _addHandlers(InAppWebViewController webController) {
+    webController
+      ..addJavaScriptHandler(
+        handlerName: 'Ready',
+        callback: (_) {
+          _isPlayerReady = true;
+          if (_onLoadStopCalled) {
+            controller.add(
+              controller.value.copyWith(isReady: true),
+            );
+          }
+        },
+      )
+      ..addJavaScriptHandler(
+        handlerName: 'StateChange',
+        callback: (args) {
+          switch (args.first as int) {
+            case -1:
+              controller.add(
+                controller.value.copyWith(
+                  playerState: PlayerState.unStarted,
+                  isReady: true,
+                ),
+              );
+              break;
+            case 0:
+              controller.add(
+                controller.value.copyWith(
+                  playerState: PlayerState.ended,
+                ),
+              );
+              break;
+            case 1:
+              controller.add(
+                controller.value.copyWith(
+                  playerState: PlayerState.playing,
+                  hasPlayed: true,
+                  error: YoutubeError.none,
+                ),
+              );
+              break;
+            case 2:
+              controller.add(
+                controller.value.copyWith(
+                  playerState: PlayerState.paused,
+                ),
+              );
+              break;
+            case 3:
+              controller.add(
+                controller.value.copyWith(
+                  playerState: PlayerState.buffering,
+                ),
+              );
+              break;
+            case 5:
+              controller.add(
+                controller.value.copyWith(
+                  playerState: PlayerState.cued,
+                ),
+              );
+              break;
+            default:
+              throw Exception("Invalid player state obtained.");
+          }
+        },
+      )
+      ..addJavaScriptHandler(
+        handlerName: 'PlaybackQualityChange',
+        callback: (args) {
+          controller.add(
+            controller.value.copyWith(playbackQuality: args.first as String),
+          );
+        },
+      )
+      ..addJavaScriptHandler(
+        handlerName: 'PlaybackRateChange',
+        callback: (args) {
+          final num rate = args.first;
+          controller.add(
+            controller.value.copyWith(playbackRate: rate.toDouble()),
+          );
+        },
+      )
+      ..addJavaScriptHandler(
+        handlerName: 'Errors',
+        callback: (args) {
+          controller.add(
+            controller.value.copyWith(error: errorEnum(args.first as int)),
+          );
+        },
+      )
+      ..addJavaScriptHandler(
+        handlerName: 'VideoData',
+        callback: (args) {
+          controller.add(
+            controller.value
+                .copyWith(metaData: YoutubeMetaData.fromRawData(args.first)),
+          );
+        },
+      )
+      ..addJavaScriptHandler(
+        handlerName: 'VideoTime',
+        callback: (args) {
+          final position = args.first * 1000;
+          final num buffered = args.last;
+          controller.add(
+            controller.value.copyWith(
+              position: Duration(milliseconds: position.floor()),
+              buffered: buffered.toDouble(),
+            ),
+          );
+        },
+      );
+  }
 
   String get player => '''
     <!DOCTYPE html>
     <body>
-         ${youtubeIFrameTag(controller!)}
+         ${youtubeIFrameTag(controller)}
         <script>
             $initPlayerIFrame
             var player;
@@ -301,7 +294,6 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
                     },
                 });
             }
-
             function sendPlayerStateChange(playerState) {
                 clearTimeout(timerId);
                 window.flutter_inappwebview.callHandler('StateChange', playerState);
@@ -310,7 +302,6 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
                     sendVideoData(player);
                 }
             }
-
             function sendVideoData(player) {
                 var videoData = {
                     'duration': player.getDuration(),
@@ -320,19 +311,17 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
                 };
                 window.flutter_inappwebview.callHandler('VideoData', videoData);
             }
-
             function startSendCurrentTimeInterval() {
                 timerId = setInterval(function () {
                     window.flutter_inappwebview.callHandler('VideoTime', player.getCurrentTime(), player.getVideoLoadedFraction());
                 }, 100);
             }
-
             $youtubeIFrameFunctions
         </script>
     </body>
   ''';
 
-  String get userAgent => controller!.params.desktopMode
+  String get userAgent => controller.params.desktopMode
       ? 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'
       : 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148';
 }

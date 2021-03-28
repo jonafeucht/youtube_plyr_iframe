@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 import 'pages/oldDemo.dart';
@@ -221,39 +223,36 @@ class YoutubeViewer extends StatefulWidget {
 
 class _YoutubeViewerState extends State<YoutubeViewer> {
   late YoutubePlayerController _controller;
-  @override
-  void dispose() {
-    _controller.showTopMenu();
-    super.dispose();
-  }
 
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: widget.videoID!,
+      initialVideoId: widget.videoID!, // livestream example
       params: YoutubePlayerParams(
+        //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
         showFullscreenButton: true,
-        desktopMode: false, // false for platform design
-        autoPlay: false,
+        desktopMode: true,
+        autoPlay: true,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
         privacyEnhanced: true,
         useHybridComposition: true,
-        playsInline: false, // iOS only
+        playsInline: false,
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller..hidePauseOverlay();
-          // Uncomment below to stop Autoplay
-          // ..play()
-          Timer(Duration(seconds: 5), () {
-            _controller.hideTopMenu();
-          });
+          _controller
+            ..hidePauseOverlay()
+            ..play()
+            ..showTopMenu();
         }
       });
+    _controller.onExitFullscreen = () {
+      Navigator.of(context).pop();
+    };
   }
 
   @override
@@ -323,8 +322,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                             YoutubePlayerController.getThumbnail(
                                 videoId: widget.videoID,
                                 // todo: get thumbnail quality from list
-                                quality: ThumbnailQuality.max,
-                                webp: false),
+                                quality: ThumbnailQuality.max),
                             fit: BoxFit.fill,
                           ),
                         ),
