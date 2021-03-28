@@ -13,8 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:youtube_plyr_iframe/src/enums/player_state.dart';
 import 'package:youtube_plyr_iframe/src/enums/youtube_error.dart';
 import 'package:youtube_plyr_iframe/src/helpers/player_fragments.dart';
-
-import '../controller.dart';
+import 'package:youtube_plyr_iframe/src/controller.dart';
 import '../meta_data.dart';
 import 'platform_view_stub.dart' if (dart.library.html) 'dart:ui' as ui;
 

@@ -5,13 +5,13 @@
 /// Meta data for Youtube Video.
 class YoutubeMetaData {
   /// Youtube video ID of the currently loaded video.
-  final String? videoId;
+  final String videoId;
 
   /// Video title of the currently loaded video.
-  final String? title;
+  final String title;
 
   /// Channel name or uploader of the currently loaded video.
-  final String? author;
+  final String author;
 
   /// Total duration of the currently loaded video.
   final Duration duration;
@@ -27,7 +27,7 @@ class YoutubeMetaData {
   /// Creates [YoutubeMetaData] from raw json video data.
   factory YoutubeMetaData.fromRawData(dynamic rawData) {
     final data = rawData as Map<String, dynamic>;
-    final durationInMs = (((data['duration'] ?? 0).toDouble()) * 1000).floor();
+    final durationInMs = ((data['duration'] ?? 0).toDouble() * 1000).floor();
     return YoutubeMetaData(
       videoId: data['videoId'],
       title: data['title'],

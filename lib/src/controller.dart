@@ -7,7 +7,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
-
 import 'enums/player_state.dart';
 import 'enums/playlist_type.dart';
 import 'enums/thumbnail_quality.dart';
@@ -73,7 +72,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
     return _controller.stream.listen(
       (value) {
         _value = value;
-        onData!(value);
+        onData?.call(value);
       },
       onError: onError,
       onDone: onDone,
@@ -252,7 +251,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
       invokeJavascript('setSize(${size.width}, ${size.height})');
 
   /// Sets the playback speed for the video.
-  void setPlaybackRate(double? rate) =>
+  void setPlaybackRate(double rate) =>
       invokeJavascript('setPlaybackRate($rate)');
 
   /// This function indicates whether the video player should continuously play a playlist
@@ -303,7 +302,6 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// If videoId is passed as url then no conversion is done.
   static String? convertUrlToId(String url, {bool trimWhitespaces = true}) {
-    assert(url.isNotEmpty, 'Url cannot be empty');
     if (!url.contains("http") && (url.length == 11)) return url;
     if (trimWhitespaces) url = url.trim();
 
@@ -312,7 +310,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
       r'^https:\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11}).*$',
       r'^https:\/\/youtu\.be\/([_\-a-zA-Z0-9]{11}).*$',
     ]) {
-      RegExpMatch? match = RegExp(regex).firstMatch(url);
+      Match? match = RegExp(regex).firstMatch(url);
       if (match != null && match.groupCount >= 1) return match.group(1);
     }
 

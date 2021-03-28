@@ -50,7 +50,7 @@ class RawYoutubePlayer extends StatefulWidget {
 class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
     with WidgetsBindingObserver {
   YoutubePlayerController? controller;
-  late Completer<InAppWebViewController> _webController;
+  //late Completer<InAppWebViewController> _webController;
   PlayerState? _cachedPlayerState;
   bool _isPlayerReady = false;
   bool _onLoadStopCalled = false;
@@ -58,7 +58,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
   @override
   void initState() {
     super.initState();
-    _webController = Completer();
+    //_webController = Completer();
     controller = widget.controller;
     WidgetsBinding.instance!.addObserver(this);
   }
@@ -133,10 +133,10 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
         ),
       ),
       onWebViewCreated: (webController) {
-        if (!_webController.isCompleted) {
-          _webController.complete(webController);
-        }
-        controller!.invokeJavascript = _callMethod;
+        // if (!_webController.isCompleted) {
+        //   _webController.complete(webController);
+        // }
+        // controller!.invokeJavascript = _callMethod;
 
         webController
           ..addJavaScriptHandler(
@@ -278,10 +278,10 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
     );
   }
 
-  Future<void> _callMethod(String methodName) async {
-    final webController = await _webController.future;
-    webController.evaluateJavascript(source: methodName);
-  }
+  // Future<void> _callMethod(String methodName) async {
+  //   final webController = await _webController.future;
+  //   webController.evaluateJavascript(source: methodName);
+  // }
 
   String get player => '''
     <!DOCTYPE html>
