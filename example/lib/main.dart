@@ -1,8 +1,5 @@
-import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 import 'pages/oldDemo.dart';
@@ -247,10 +244,11 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
           _controller
             ..hidePauseOverlay()
             ..play()
-            ..showTopMenu();
+            ..hideTopMenu();
         }
       });
     _controller.onExitFullscreen = () {
+      _controller.close();
       Navigator.of(context).pop();
     };
   }

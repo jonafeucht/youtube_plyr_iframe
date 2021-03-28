@@ -82,10 +82,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
             return ListView(
               children: [
                 player,
-                Container(
-                  height: 10,
-                  color: Theme.of(context).primaryColor,
-                ),
+                Container(height: 5, color: Colors.black),
                 const Controls(),
               ],
             );

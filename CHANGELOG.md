@@ -1,4 +1,4 @@
-## 2.0.3-rc.2
+## 2.0.3
 - Fix `Unhandled Exception: MissingPluginException`.
 - Fix [#18](https://github.com/jonatadashi/youtube_plyr_iframe/issues/18).
 
