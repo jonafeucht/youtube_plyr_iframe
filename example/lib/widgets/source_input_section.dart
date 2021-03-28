@@ -58,7 +58,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
             ),
             const SizedBox(height: 10),
             TextField(
-              enabled: value!.isReady,
+              enabled: value.isReady,
               controller: _textController,
               decoration: InputDecoration(
                 border: InputBorder.none,

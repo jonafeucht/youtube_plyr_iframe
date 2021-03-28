@@ -2,12 +2,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:youtube_player_iframe_example/widgets/meta_data_section.dart';
-import 'package:youtube_player_iframe_example/widgets/play_pause_button_bar.dart';
-import 'package:youtube_player_iframe_example/widgets/player_state_section.dart';
-import 'package:youtube_player_iframe_example/widgets/source_input_section.dart';
-import 'package:youtube_player_iframe_example/widgets/volume_slider.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
+
+import '../widgets/meta_data_section.dart';
+import '../widgets/play_pause_button_bar.dart';
+import '../widgets/player_state_section.dart';
+import '../widgets/source_input_section.dart';
+import '../widgets/volume_slider.dart';
 
 ///
 class OldDemo extends StatefulWidget {
@@ -33,21 +34,22 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
         showFullscreenButton: true,
-        desktopMode: false, // true for youtube design
+        desktopMode: true, // true for youtube design
         autoPlay: false,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
         privacyEnhanced: true,
+        useHybridComposition: true,
         playsInline: true, // iOS only - Auto fullscreen or not
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
-          _controller..hidePauseOverlay();
-          //..play()
-          Timer(Duration(seconds: 5), () {
-            _controller.hideTopMenu();
-          });
+          _controller
+            ..hidePauseOverlay()
+            ..
+                //..play()
+                showTopMenu();
         }
       });
   }
@@ -61,9 +63,9 @@ class _YoutubeAppDemoState extends State<OldDemo> {
       child: YoutubeValueBuilder(
         key: UniqueKey(),
         builder: (context, value) {
-          if (value!.isReady && !value.hasPlayed) {
-            Timer(Duration(seconds: 30), () {
-              _controller.showTopMenu();
+          if (value.isReady && !value.hasPlayed) {
+            Timer(Duration(seconds: 5), () {
+              _controller.hideTopMenu();
             });
           }
           return Scaffold(
@@ -93,6 +95,10 @@ class _YoutubeAppDemoState extends State<OldDemo> {
                 return ListView(
                   children: [
                     player,
+                    Container(
+                      height: 10,
+                      color: Colors.black,
+                    ),
                     const Controls(),
                   ],
                 );

@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_iframe_example/pages/oldDemo.dart';
-import 'package:youtube_player_iframe_example/pages/thumbnailDemo.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
+
+import 'pages/oldDemo.dart';
+import 'pages/thumbnailDemo.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
