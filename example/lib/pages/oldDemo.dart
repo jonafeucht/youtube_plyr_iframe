@@ -31,14 +31,14 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
         showFullscreenButton: false,
-        desktopMode: false, // true for youtube design
+        desktopMode: true, // true for youtube design
         autoPlay: false,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
         privacyEnhanced: true,
         useHybridComposition: true,
-        playsInline: false, // iOS only - Auto fullscreen or not
+        playsInline: true, // iOS only - Auto fullscreen or not
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
