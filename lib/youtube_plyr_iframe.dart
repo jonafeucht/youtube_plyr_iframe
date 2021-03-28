@@ -48,7 +48,7 @@ class YoutubePlayerIFrame extends StatelessWidget {
   const YoutubePlayerIFrame({
     Key? key,
     this.controller,
-    this.aspectRatio = 16 / 10,
+    this.aspectRatio = 16 / 9,
     this.gestureRecognizers,
   }) : super(key: key);
 
