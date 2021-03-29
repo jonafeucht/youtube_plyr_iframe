@@ -90,7 +90,10 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      decoration: BoxDecoration(
+        border: Border.all(width: 0, color: Colors.black),
+        color: Colors.black,
+      ),
       child: InAppWebView(
         key: ValueKey(controller.hashCode),
         initialData: InAppWebViewInitialData(
@@ -120,11 +123,10 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             disableContextMenu: true,
             supportZoom: false,
             disableHorizontalScroll: false,
-            disableVerticalScroll: true,
+            disableVerticalScroll: false,
             useShouldOverrideUrlLoading: false,
           ),
           ios: IOSInAppWebViewOptions(
-            disableLongPressContextMenuOnLinks: true,
             allowsInlineMediaPlayback: true,
             allowsAirPlayForMediaPlayback: true,
             allowsPictureInPictureMediaPlayback: true,
