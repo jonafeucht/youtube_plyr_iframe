@@ -1,8 +1,8 @@
 ## 2.0.3
 - Fix `Unhandled Exception: MissingPluginException`.
 - Fix [#18](https://github.com/jonatadashi/youtube_plyr_iframe/issues/18).
-- Added `hideYoutubeLogo`
-- Added `hideEndScreen`
+- Added `hideYoutubeLogo`.
+- Added `hideEndScreen`.
 
 ## 2.0.2
 - Added `useHybridComposition`.
