@@ -45,9 +45,11 @@ class _YoutubeAppDemoState extends State<OldDemo> {
           _controller
             ..hidePauseOverlay()
             ..hideYoutubeLogo()
-            ..hideEndScreen()
             //..play()
             ..hideTopMenu();
+        }
+        if (value.hasPlayed) {
+          _controller..hideEndScreen();
         }
       });
   }
