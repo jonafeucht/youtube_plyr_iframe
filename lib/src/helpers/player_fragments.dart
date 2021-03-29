@@ -33,10 +33,9 @@ String youtubeIFrameTag(YoutubePlayerController controller) {
     'embed/${controller.initialVideoId}',
     params,
   );
-  return '<iframe id="player" type="text/html"'
-      ' style="background:black!important;position:absolute; top:0px; left:0px; bottom:0px; right:10px;'
-      ' width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"'
-      ' src="$sourceUri" frameborder="0" allowfullscreen></iframe>';
+  return """<iframe id="player" type="text/html"
+style="background:black!important;position:absolute; top:0px; left:0px; bottom:0px; right:10px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"
+src="$sourceUri" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>""";
 }
 
 ///
@@ -126,6 +125,23 @@ function showTopMenu() {
 }
 function hidePauseOverlay() {
   try { document.querySelector('#player').contentDocument.querySelector('.ytp-pause-overlay').style.display = 'none'; } catch(e) { }
+  return '';
+}
+function hideYoutubeOverlay() {
+  try { document.querySelector('#player').contentDocument.querySelector('.ytp-youtube-button').style.display = 'none'; } catch(e) { }
+  return '';
+}
+function hideYoutubeLogo() {
+  try { document.querySelector('#player').contentDocument.querySelector('.ytp-youtube-button').style.display = 'none'; } catch(e) { }
+  return '';
+}
+function hideEndScreen() {
+  try {
+  document.querySelector('#player').contentDocument.querySelector('.ytp-endscreen-content').style.display = 'none';
+  document.querySelector('#player').contentDocument.querySelector('.html5-endscreen').style.display = 'none';
+  document.querySelector('#player').contentDocument.querySelector('.ytp-endscreen-previous').style.display = 'none';
+  document.querySelector('#player').contentDocument.querySelector('.ytp-endscreen-next').style.display = 'none';
+  } catch(e) { }
   return '';
 }
 ''';

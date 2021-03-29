@@ -44,6 +44,8 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
+            ..hideYoutubeLogo()
+            ..hideEndScreen()
             //..play()
             ..hideTopMenu();
         }

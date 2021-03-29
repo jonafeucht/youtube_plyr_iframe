@@ -244,6 +244,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
           _controller
             ..hidePauseOverlay()
             ..play()
+            ..hideEndScreen()
             ..hideTopMenu();
         }
       });
