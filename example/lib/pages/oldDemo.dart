@@ -1,15 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_iframe_example/widgets/meta_data_section.dart';
-import 'package:youtube_player_iframe_example/widgets/play_pause_button_bar.dart';
-import 'package:youtube_player_iframe_example/widgets/player_state_section.dart';
-import 'package:youtube_player_iframe_example/widgets/source_input_section.dart';
-import 'package:youtube_player_iframe_example/widgets/volume_slider.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
+import '../widgets/meta_data_section.dart';
+import '../widgets/play_pause_button_bar.dart';
+import '../widgets/player_state_section.dart';
+import '../widgets/source_input_section.dart';
+import '../widgets/volume_slider.dart';
 
-///
 class OldDemo extends StatefulWidget {
   @override
   _YoutubeAppDemoState createState() => _YoutubeAppDemoState();
@@ -22,50 +20,38 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: '5qap5aO4i9A', // livestream example
+      initialVideoId: 'RCQRCTnDYXo', // livestream example
       params: YoutubePlayerParams(
         playlist: [
-          'F1B9Fk_SgI0',
+          'RCQRCTnDYXo',
           "MnrJzXM7a6o",
           "FTQbiNvZqaY",
           "iYKXdt0LRs8",
         ],
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
-        showFullscreenButton: true,
-        desktopMode: false, // false for platform design
+        showFullscreenButton: false,
+        desktopMode: true, // true for youtube design
         autoPlay: false,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
         privacyEnhanced: true,
+        useHybridComposition: true,
         playsInline: true, // iOS only - Auto fullscreen or not
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
+            ..hideYoutubeLogo()
+            //..play()
             ..hideTopMenu();
         }
+        if (value.hasPlayed) {
+          _controller..hideEndScreen();
+        }
       });
-    //Uncomment below for auto rotation on fullscreen
-    // _controller.onEnterFullscreen = () {
-    //   SystemChrome.setPreferredOrientations([
-    //     DeviceOrientation.landscapeLeft,
-    //     DeviceOrientation.landscapeRight,
-    //   ]);
-    //   log('Entered Fullscreen');
-    // };
-    // _controller.onExitFullscreen = () {
-    //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    //   Future.delayed(const Duration(seconds: 1), () {
-    //     _controller.play();
-    //   });
-    //   Future.delayed(const Duration(seconds: 5), () {
-    //     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    //   });
-    //   log('Exited Fullscreen');
-    // };
   }
 
   @override
@@ -74,44 +60,38 @@ class _YoutubeAppDemoState extends State<OldDemo> {
     return YoutubePlayerControllerProvider(
       // Passing controller to widgets below.
       controller: _controller,
-      child: YoutubeValueBuilder(
-        key: UniqueKey(),
-        builder: (context, value) {
-          if (value!.isReady && !value.hasPlayed) {
-            Timer(Duration(seconds: 5), () {
-              _controller.showTopMenu();
-            });
-          }
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Youtube Plyr Demo'),
-            ),
-            body: LayoutBuilder(
-              builder: (context, constraints) {
-                if (kIsWeb && constraints.maxWidth > 800) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Expanded(child: player),
-                      const SizedBox(
-                        width: 500,
-                        child: SingleChildScrollView(
-                          child: Controls(),
-                        ),
-                      ),
-                    ],
-                  );
-                }
-                return ListView(
-                  children: [
-                    player,
-                    const Controls(),
-                  ],
-                );
-              },
-            ),
-          );
-        },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          elevation: 0,
+          brightness: Brightness.dark,
+          title: const Text('Inline Demo'),
+        ),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            if (kIsWeb && constraints.maxWidth > 800) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Expanded(child: player),
+                  const SizedBox(
+                    width: 500,
+                    child: SingleChildScrollView(
+                      child: Controls(),
+                    ),
+                  ),
+                ],
+              );
+            }
+            return ListView(
+              children: [
+                player,
+                Container(height: 5, color: Colors.black),
+                const Controls(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

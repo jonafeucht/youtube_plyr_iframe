@@ -24,9 +24,6 @@ For more details see: [https://pub.dev/packages/youtube_plyr_iframe/install](htt
 
 [Click here for WEB DEMO](https://jonatadashi.github.io/Web-Example/)
 
-## Example App
-[<img src="https://itsallwidgets.com/images/google.png" height="70px">](https://play.google.com/store/apps/details?id=space.starhelix.lore.christianity)[<img src="https://chroniken.starhelix.space/dist/images/applestore.svg" height="70px">](https://apps.apple.com/app/id1484833082#?platform=iphone)
-
 ## Salient Features
 * Inline Playback
 * Supports captions
@@ -54,7 +51,17 @@ Since *flutter_inappwebview* relies on Flutter's mechanism for embedding Android
 ## Setup
 
 ### Web
-No Configuration Required.
+No Configuration required, if developing without the need to load thumbnails. (Inline thumbnails will still load.)
+
+To load thumbnails the HTML renderer is needed.
+
+- Run: `flutter run -d chrome --web-renderer html`
+- Build: `flutter build web --web-renderer html --profile`
+
+Read for more information:
+- [Web renderers](https://flutter.dev/docs/development/tools/web-renderers)
+- [Displaying images on the web
+](https://flutter.dev/docs/development/platform-integration/web-images)
 
 ### iOS
 No Configuration Required.
@@ -155,6 +162,8 @@ onExitFullScreen()                                  | Called when player exits f
 invokeJavascript(function)                          | Invoke custom javascript function.
 hideTopMenu()                                       | Hides the title and share icons at the top of player (_May violate YouTube's TOS. Use at your own risk._)
 hidePauseOverlay()                                  | Hides the related videos overlay while player is paused (_May violate YouTube's TOS. Use at your own risk._)
+hideYoutubeLogo()                                   | Hides the Youtube Logo (_May violate YouTube's TOS. Use at your own risk._)
+hideEndScreen()                                     | Hides the Endscreen Overlay (_May violate YouTube's TOS. Use at your own risk._)
 
 ## Youtube Player Parameters
 All the available parameters.
@@ -183,7 +192,7 @@ desktopMode                | The controls will be alike Youtube Desktop's contro
 
 ## License
 ```
-Copyright 2020 Sarbagya Dhaubanjar. All rights reserved.
+Copyright 2021 Sarbagya Dhaubanjar & Jona T. Feucht. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -194,9 +203,6 @@ are permitted provided that the following conditions are met:
       copyright notice, this list of conditions and the following
       disclaimer in the documentation and/or other materials provided
       with the distribution.
-    * Neither the name of Google Inc. nor the names of its
-      contributors may be used to endorse or promote products derived
-      from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED

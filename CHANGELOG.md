@@ -1,6 +1,16 @@
+## 2.0.3
+- Fix `Unhandled Exception: MissingPluginException`.
+- Fix [#18](https://github.com/jonatadashi/youtube_plyr_iframe/issues/18).
+- Added `hideYoutubeLogo`.
+- Added `hideEndScreen`.
+
+## 2.0.2
+- Added `useHybridComposition`.
+- Added documentation on how to load thumbnails.
+
 ## 2.0.1
 - Fix `Unhandled Exception: Null check operator used on a null value`
-Added showTopMenu as requested in [#12](https://github.com/jonatadashi/youtube_plyr_iframe/issues/12).
+- Added showTopMenu as requested in [#12](https://github.com/jonatadashi/youtube_plyr_iframe/issues/12).
 
 ## 2.0.0
 - 💪 Running with sound null safety 💪

@@ -73,7 +73,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
     return _controller.stream.listen(
       (value) {
         _value = value;
-        onData!(value);
+        onData?.call(value);
       },
       onError: onError,
       onDone: onDone,
@@ -275,7 +275,19 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   void hideTopMenu() => invokeJavascript('hideTopMenu()');
 
   /// Show top menu
+  ///
+  /// Might violates Youtube's TOS. Use at your own risk.
   void showTopMenu() => invokeJavascript('showTopMenu()');
+
+  /// Hide Youtube Logo
+  ///
+  /// Might violates Youtube's TOS. Use at your own risk.
+  void hideYoutubeLogo() => invokeJavascript('hideYoutubeLogo()');
+
+  /// Hide EndScreen
+  ///
+  /// Might violates Youtube's TOS. Use at your own risk.
+  void hideEndScreen() => invokeJavascript('hideEndScreen()');
 
   /// Hides pause overlay i.e. related videos shown when player is paused.
   ///
@@ -303,7 +315,6 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// If videoId is passed as url then no conversion is done.
   static String? convertUrlToId(String url, {bool trimWhitespaces = true}) {
-    assert(url.isNotEmpty, 'Url cannot be empty');
     if (!url.contains("http") && (url.length == 11)) return url;
     if (trimWhitespaces) url = url.trim();
 
@@ -312,7 +323,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
       r'^https:\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11}).*$',
       r'^https:\/\/youtu\.be\/([_\-a-zA-Z0-9]{11}).*$',
     ]) {
-      RegExpMatch? match = RegExp(regex).firstMatch(url);
+      Match? match = RegExp(regex).firstMatch(url);
       if (match != null && match.groupCount >= 1) return match.group(1);
     }
 

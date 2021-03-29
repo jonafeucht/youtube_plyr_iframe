@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_iframe_example/pages/oldDemo.dart';
-import 'package:youtube_player_iframe_example/pages/thumbnailDemo.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
+
+import 'pages/oldDemo.dart';
+import 'pages/thumbnailDemo.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,7 +73,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                     Row(
                       children: [
                         ElevatedButton(
-                          child: Text("Old Demo"),
+                          child: Text("Inline Demo"),
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => OldDemo()),
@@ -219,57 +220,40 @@ class YoutubeViewer extends StatefulWidget {
 
 class _YoutubeViewerState extends State<YoutubeViewer> {
   late YoutubePlayerController _controller;
-  @override
-  void dispose() {
-    _controller.showTopMenu();
-    super.dispose();
-  }
 
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: widget.videoID!,
+      initialVideoId: widget.videoID!, // livestream example
       params: YoutubePlayerParams(
+        //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
         showFullscreenButton: true,
-        desktopMode: false, // false for platform design
-        autoPlay: false,
+        desktopMode: false,
+        autoPlay: true,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
         privacyEnhanced: true,
-        playsInline: false, // iOS only
+        useHybridComposition: true,
+        playsInline: false,
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
-
-            // Uncomment below to stop Autoplay
-            // ..play()
+            ..play()
             ..hideTopMenu();
         }
+        if (value.hasPlayed) {
+          _controller..hideEndScreen();
+        }
       });
-
-    // Uncomment below for device orientation
-    // _controller!.onEnterFullscreen = () {
-    //   SystemChrome.setPreferredOrientations([
-    //     DeviceOrientation.landscapeLeft,
-    //     DeviceOrientation.landscapeRight,
-    //   ]);
-    //   log('Entered Fullscreen');
-    // };
-    // _controller!.onExitFullscreen = () {
-    //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    //   Future.delayed(const Duration(seconds: 1), () {
-    //     _controller!.play();
-    //   });
-    //   Future.delayed(const Duration(seconds: 5), () {
-    //     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    //   });
-    //   log('Exited Fullscreen');
-    // };
+    _controller.onExitFullscreen = () {
+      _controller.close();
+      Navigator.of(context).pop();
+    };
   }
 
   @override
@@ -339,8 +323,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                             YoutubePlayerController.getThumbnail(
                                 videoId: widget.videoID,
                                 // todo: get thumbnail quality from list
-                                quality: ThumbnailQuality.max,
-                                webp: false),
+                                quality: ThumbnailQuality.max),
                             fit: BoxFit.fill,
                           ),
                         ),
