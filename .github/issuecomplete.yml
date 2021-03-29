@@ -15,8 +15,9 @@ commentText: >
   text.
   
 # Whether or not to ensure all checkboxes are checked
-checkCheckboxes: false
+checkCheckboxes: true
 
 # Keywords to look for in the body of the issue
 keywords:
   - Bug
+  - Reproduce
