@@ -42,7 +42,7 @@ jobs:
         with:
           channel: "beta"
       - run: flutter pub get
-      - run: flutter build ios
+      - run: flutter build ios --no-codesign
       
   build_web:
     name: Build Web
