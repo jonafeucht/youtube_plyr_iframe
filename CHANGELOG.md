@@ -1,4 +1,4 @@
-## 2.0.4-pre.1
+## 2.0.4-pre.2
 - 
 ## 2.0.3
 - Fix `Unhandled Exception: MissingPluginException`.
