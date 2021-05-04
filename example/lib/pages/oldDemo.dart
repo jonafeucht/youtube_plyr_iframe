@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
@@ -20,10 +21,10 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: 'RCQRCTnDYXo', // livestream example
+      initialVideoId: 'PqX1SkYpNJQ',
       params: YoutubePlayerParams(
         playlist: [
-          'RCQRCTnDYXo',
+          'PqX1SkYpNJQ',
           "MnrJzXM7a6o",
           "FTQbiNvZqaY",
           "iYKXdt0LRs8",
@@ -52,11 +53,21 @@ class _YoutubeAppDemoState extends State<OldDemo> {
           _controller..hideEndScreen();
         }
       });
+    // _controller.onEnterFullscreen = () {
+    //   SystemChrome.setPreferredOrientations([
+    //     DeviceOrientation.landscapeLeft,
+    //     DeviceOrientation.landscapeRight,
+    //   ]);
+    // };
+    // _controller.onExitFullscreen = () {
+    // };
   }
 
   @override
   Widget build(BuildContext context) {
-    const player = YoutubePlayerIFrame();
+    const player = YoutubePlayerIFrame(
+      gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+    );
     return YoutubePlayerControllerProvider(
       // Passing controller to widgets below.
       controller: _controller,
@@ -86,7 +97,6 @@ class _YoutubeAppDemoState extends State<OldDemo> {
             return ListView(
               children: [
                 player,
-                Container(height: 5, color: Colors.black),
                 const Controls(),
               ],
             );

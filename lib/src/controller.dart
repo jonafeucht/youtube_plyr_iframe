@@ -85,7 +85,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// Call when the controller is no longer used.
   @override
-  Future<void> close() => _controller.close();
+  Future<void> close() => _controller.done;
 
   /// Plays the currently cued/loaded video.
   ///

@@ -10,7 +10,7 @@ Supported Platforms:
 - **iOS** (Platform design -> eg. Airplay, Captions)
 - **Web**
 
-See [Salient Features](https://github.com/jonatadashi/youtube_plyr_iframe/tree/main#salient-features) for more information.
+See [Salient Features](https://github.com/smalldreams/youtube_plyr_iframe/tree/main#salient-features) for more information.
 
 ## Migrating from [youtube_player_iframe](https://pub.dev/packages/youtube_player_iframe)
 1. Replace package in `pubspec.yaml` file. 
@@ -20,9 +20,9 @@ For more details see: [https://pub.dev/packages/youtube_plyr_iframe/install](htt
 
 ---
 
-<img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0"><a href="https://jonatadashi.github.io/Web-Example/"><img src="https://i.ibb.co/DrrcRvq/Web-capture-21-2-2021-175044-web-example-starhelix-space.jpg" alt="web" border="0"></a>
+<img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0"><a href="https://smalldreams.github.io/Web-Example/"><img src="https://i.ibb.co/DrrcRvq/Web-capture-21-2-2021-175044-web-example-starhelix-space.jpg" alt="web" border="0"></a>
 
-[Click here for WEB DEMO](https://jonatadashi.github.io/Web-Example/)
+[Click here for WEB DEMO](https://smalldreams.github.io/Web-Example/)
 
 ## Salient Features
 * Inline Playback
@@ -44,9 +44,10 @@ For Android & iOS, the package uses [flutter_inappwebview](https://pub.dartlang.
 Since *flutter_inappwebview* relies on Flutter's mechanism for embedding Android and iOS views, this plugin might share some known issues tagged with the [platform-views](https://github.com/flutter/flutter/labels/a%3A%20platform-views) label.
 
 ## Requirements
+* **Project**: Flutter Version `>=2.0.0` and `Sound Null Safety`
 * **Android**: `minSdkVersion 23` and add support for `androidx` (see [AndroidX Migration](https://flutter.dev/docs/development/androidx-migration))
 * **iOS**: `--ios-language swift`, Xcode version `>= 12`
-* **Web**: None
+* **Web**: See setup
 
 ## Setup
 
@@ -102,7 +103,7 @@ YoutubePlayerControllerProvider( // Provides controller to all the widget below 
 
 // Access the controller as: `YoutubePlayerControllerProvider.of(context)` or `controller.ytController`.
 ```
-Please see [EXAMPLE](https://github.com/jonatadashi/youtube_plyr_iframe/blob/main/example/lib/main.dart) for more details.
+Please see [EXAMPLE](https://github.com/smalldreams/youtube_plyr_iframe/blob/main/example/lib/main.dart) for more details.
 
 ## Want to customize the player?
 The package provides `YoutubeValueBuilder`, which can be used to create any custom controls.
@@ -129,7 +130,7 @@ YoutubeValueBuilder(
    },
 );
 ```
-Please see [EXAMPLE](https://github.com/jonatadashi/youtube_plyr_iframe/blob/main/example/lib/main.dart) for more details.
+Please see [EXAMPLE](https://github.com/smalldreams/youtube_plyr_iframe/blob/main/example/lib/main.dart) for more details.
 
 ## Available Methods
 Methods available for `YoutubePlayerController`.
