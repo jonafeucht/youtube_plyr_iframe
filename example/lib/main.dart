@@ -251,9 +251,15 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         }
       });
     _controller.onExitFullscreen = () {
-      _controller.close();
       Navigator.of(context).pop();
     };
+  }
+
+  @override
+  void dispose() {
+    _controller.showTopMenu();
+    _controller.close();
+    super.dispose();
   }
 
   @override

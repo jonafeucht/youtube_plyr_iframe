@@ -12,7 +12,7 @@ class SourceInputSection extends StatefulWidget {
 }
 
 class _SourceInputSectionState extends State<SourceInputSection> {
-  TextEditingController? _textController;
+  late TextEditingController _textController;
   String? _playlistType;
 
   @override
@@ -58,7 +58,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
             ),
             const SizedBox(height: 10),
             TextField(
-              enabled: value!.isReady,
+              enabled: value.isReady,
               controller: _textController,
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -72,7 +72,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                 ),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
-                  onPressed: () => _textController!.clear(),
+                  onPressed: () => _textController.clear(),
                 ),
               ),
             ),
@@ -88,13 +88,15 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                 _Button(
                   action: 'LOAD',
                   onTap: () {
-                    context.ytController.load(_cleanId(_textController!.text)!);
+                    context.ytController
+                        .load(_cleanId(_textController.text) ?? '');
                   },
                 ),
                 _Button(
                   action: 'CUE',
                   onTap: () {
-                    context.ytController.cue(_cleanId(_textController!.text)!);
+                    context.ytController
+                        .cue(_cleanId(_textController.text) ?? '');
                   },
                 ),
                 _Button(
@@ -103,7 +105,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                       ? null
                       : () {
                           context.ytController.loadPlaylist(
-                            _textController!.text,
+                            _textController.text,
                             listType: _playlistType!,
                           );
                         },
@@ -114,7 +116,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
                       ? null
                       : () {
                           context.ytController.cuePlaylist(
-                            _textController!.text,
+                            _textController.text,
                             listType: _playlistType!,
                           );
                         },
@@ -161,7 +163,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
   }
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    Scaffold.of(context).showSnackBar(
       SnackBar(
         content: Text(
           message,
@@ -183,7 +185,7 @@ class _SourceInputSectionState extends State<SourceInputSection> {
 
   @override
   void dispose() {
-    _textController?.dispose();
+    _textController.dispose();
     super.dispose();
   }
 }
@@ -205,7 +207,7 @@ class _Button extends StatelessWidget {
       onPressed: onTap == null
           ? null
           : () {
-              onTap!();
+              onTap?.call();
               FocusScope.of(context).unfocus();
             },
       disabledColor: Colors.grey,
