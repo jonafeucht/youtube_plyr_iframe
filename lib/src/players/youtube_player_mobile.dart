@@ -12,6 +12,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:youtube_plyr_iframe/src/enums/youtube_error.dart';
 import 'package:youtube_plyr_iframe/src/helpers/player_fragments.dart';
+import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 import '../controller.dart';
 import '../enums/player_state.dart';
@@ -124,7 +125,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             supportZoom: false,
             disableHorizontalScroll: false,
             disableVerticalScroll: false,
-            useShouldOverrideUrlLoading: false,
+            useShouldOverrideUrlLoading: true,
           ),
           ios: IOSInAppWebViewOptions(
             allowsInlineMediaPlayback: true,
@@ -136,6 +137,20 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             useHybridComposition: controller.params.useHybridComposition,
           ),
         ),
+        shouldOverrideUrlLoading: (_, detail) async {
+          final uri = detail.request.url;
+          if (uri == null) return NavigationActionPolicy.CANCEL;
+
+          final feature = uri.queryParameters['feature'];
+          if (feature == 'emb_rel_pause') {
+            if (uri.queryParameters.containsKey('v')) {
+              controller.load(uri.queryParameters['v']!);
+            }
+          } else {
+            return NavigationActionPolicy.ALLOW;
+          }
+          return NavigationActionPolicy.CANCEL;
+        },
         onWebViewCreated: (webController) {
           if (!_webController.isCompleted) {
             _webController.complete(webController);
@@ -300,6 +315,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
                     },
                 });
             }
+
             function sendPlayerStateChange(playerState) {
                 clearTimeout(timerId);
                 window.flutter_inappwebview.callHandler('StateChange', playerState);
@@ -308,6 +324,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
                     sendVideoData(player);
                 }
             }
+
             function sendVideoData(player) {
                 var videoData = {
                     'duration': player.getDuration(),
@@ -317,17 +334,19 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
                 };
                 window.flutter_inappwebview.callHandler('VideoData', videoData);
             }
+
             function startSendCurrentTimeInterval() {
                 timerId = setInterval(function () {
                     window.flutter_inappwebview.callHandler('VideoTime', player.getCurrentTime(), player.getVideoLoadedFraction());
                 }, 100);
             }
+
             $youtubeIFrameFunctions
         </script>
     </body>
   ''';
 
-  String get userAgent => controller.params.desktopMode
+  String get userAgent => !controller.params.desktopMode
       ? 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'
       : 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148';
 }

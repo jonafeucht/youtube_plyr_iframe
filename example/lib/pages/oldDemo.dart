@@ -45,12 +45,9 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
-            ..hideYoutubeLogo()
+
             //..play()
             ..hideTopMenu();
-        }
-        if (value.hasPlayed) {
-          _controller..hideEndScreen();
         }
       });
     // _controller.onEnterFullscreen = () {
@@ -104,12 +101,6 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _controller.showTopMenu();
-    super.dispose();
   }
 }
 

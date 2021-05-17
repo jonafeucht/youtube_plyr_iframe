@@ -85,7 +85,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// Call when the controller is no longer used.
   @override
-  Future<void> close() => _controller.done;
+  Future<void> close() => _controller.close();
 
   /// Plays the currently cued/loaded video.
   ///
@@ -252,7 +252,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
       invokeJavascript('setSize(${size.width}, ${size.height})');
 
   /// Sets the playback speed for the video.
-  void setPlaybackRate(double? rate) =>
+  void setPlaybackRate(double rate) =>
       invokeJavascript('setPlaybackRate($rate)');
 
   /// This function indicates whether the video player should continuously play a playlist
@@ -274,6 +274,11 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   /// Might violates Youtube's TOS. Use at your own risk.
   void hideTopMenu() => invokeJavascript('hideTopMenu()');
 
+  /// Hides pause overlay i.e. related videos shown when player is paused.
+  ///
+  /// Might violates Youtube's TOS. Use at your own risk.
+  void hidePauseOverlay() => invokeJavascript('hidePauseOverlay()');
+
   /// Show top menu
   ///
   /// Might violates Youtube's TOS. Use at your own risk.
@@ -288,11 +293,6 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
   ///
   /// Might violates Youtube's TOS. Use at your own risk.
   void hideEndScreen() => invokeJavascript('hideEndScreen()');
-
-  /// Hides pause overlay i.e. related videos shown when player is paused.
-  ///
-  /// Might violates Youtube's TOS. Use at your own risk.
-  void hidePauseOverlay() => invokeJavascript('hidePauseOverlay()');
 
   /// MetaData for the currently loaded or cued video.
   YoutubeMetaData get metadata => _value.metaData;
