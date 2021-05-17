@@ -1,5 +1,13 @@
-## 2.0.4-pre.2
-- 
+## 2.0.5
+- Fix [#24](https://github.com/smalldreams/youtube_plyr_iframe/issues/24).
+- Fix [#23](https://github.com/smalldreams/youtube_plyr_iframe/issues/23).
+- Fix [#21](https://github.com/smalldreams/youtube_plyr_iframe/issues/21).
+- Fix [#20](https://github.com/smalldreams/youtube_plyr_iframe/issues/20).
+
+## 2.0.4
+- Updated docs
+- Bumped up `flutter_inappwebview`.
+
 ## 2.0.3
 - Fix `Unhandled Exception: MissingPluginException`.
 - Fix [#18](https://github.com/smalldreams/youtube_plyr_iframe/issues/18).
