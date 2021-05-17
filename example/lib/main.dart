@@ -97,6 +97,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                     Divider(),
                     Text("Single Player"),
                     ytPlayer("F1B9Fk_SgI0"),
+                    ytPlayer("KTJQiGRQS8Q"),
                     Divider(),
                     Text("From String"),
                     ytPlayer(videoID),
@@ -253,13 +254,6 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
     _controller.onExitFullscreen = () {
       Navigator.of(context).pop();
     };
-  }
-
-  @override
-  void dispose() {
-    _controller.showTopMenu();
-    _controller.close();
-    super.dispose();
   }
 
   @override
