@@ -6,7 +6,7 @@ daysUntilClose: 7
 exemptLabels:
   - pinned
   - security
-exemptAssignees: false
+exemptAssignees: true
 # Label to use when marking an issue as stale
 staleLabel: "status: waiting-for-reply"
 # Comment to post when marking an issue as stale. Set to `false` to disable
