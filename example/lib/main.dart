@@ -241,6 +241,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
         playsInline: false,
       ),
     )..listen((value) {
+        print(_controller.value.position);
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
@@ -251,6 +252,7 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
           _controller..hideEndScreen();
         }
       });
+
     _controller.onExitFullscreen = () {
       Navigator.of(context).pop();
     };

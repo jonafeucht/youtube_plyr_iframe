@@ -6,7 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 ///
-class VolumeSlider extends StatelessWidget {
+
+class VolumeSlider extends StatefulWidget {
+  @override
+  _VolumeSliderState createState() => _VolumeSliderState();
+}
+
+class _VolumeSliderState extends State<VolumeSlider> {
   final _volume = ValueNotifier<int>(100);
 
   @override
@@ -18,10 +24,10 @@ class VolumeSlider extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w300),
         ),
         Expanded(
-          child: ValueListenableBuilder<int>(
+          child: ValueListenableBuilder(
             valueListenable: _volume,
-            builder: (context, volume, _) {
-              return Slider(
+            builder: (context, dynamic volume, _) {
+              return Slider.adaptive(
                 inactiveColor: Colors.transparent,
                 value: volume.toDouble(),
                 min: 0.0,
@@ -29,8 +35,15 @@ class VolumeSlider extends StatelessWidget {
                 divisions: 10,
                 label: '$volume',
                 onChanged: (value) {
-                  _volume.value = value.round();
-                  context.ytController.setVolume(volume);
+                  setState(() {
+                    _volume.value = value.round();
+                    context.ytController.setVolume(volume);
+                    if (_volume.value == 0.0) {
+                      context.ytController.mute();
+                    } else {
+                      context.ytController.unMute();
+                    }
+                  });
                 },
               );
             },
