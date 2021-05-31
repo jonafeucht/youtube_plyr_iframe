@@ -26,17 +26,17 @@ class _VolumeSliderState extends State<VolumeSlider> {
         Expanded(
           child: ValueListenableBuilder(
             valueListenable: _volume,
-            builder: (context, dynamic volume, _) {
-              return Slider.adaptive(
+            builder: (context, int volume, _) {
+              return Slider(
                 inactiveColor: Colors.transparent,
                 value: volume.toDouble(),
                 min: 0.0,
                 max: 100.0,
-                divisions: 10,
+                //divisions: 30,
                 label: '$volume',
                 onChanged: (value) {
                   setState(() {
-                    _volume.value = value.round();
+                    _volume.value = value.toInt();
                     context.ytController.setVolume(volume);
                     if (_volume.value == 0.0) {
                       context.ytController.mute();
