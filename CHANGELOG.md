@@ -1,3 +1,6 @@
+## 2.0.6
+- Fix: [#32](https://github.com/smalldreams/youtube_plyr_iframe/issues/32).
+
 ## 2.0.5+1
 - Fix: `Bad state: Cannot add new events after calling close` [#20](https://github.com/smalldreams/youtube_plyr_iframe/issues/20).
 

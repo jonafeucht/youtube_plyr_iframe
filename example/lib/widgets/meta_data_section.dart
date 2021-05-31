@@ -7,6 +7,7 @@ import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 ///
 class MetaDataSection extends StatelessWidget {
+  double? v = 1.0;
   @override
   Widget build(BuildContext context) {
     return YoutubeValueBuilder(builder: (context, value) {
@@ -25,38 +26,29 @@ class MetaDataSection extends StatelessWidget {
           Row(
             children: [
               _Text('Video Id', value.metaData.videoId),
-              const Spacer(),
-              const _Text(
-                'Speed',
-                '',
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              const Text(
+                "Speed",
+                style: TextStyle(fontWeight: FontWeight.w300),
               ),
-              YoutubeValueBuilder(
-                builder: (context, value) {
-                  return DropdownButton(
-                    value: value.playbackRate,
-                    isDense: true,
-                    underline: const SizedBox(),
-                    items: PlaybackRate.all
-                        .map(
-                          (rate) => DropdownMenuItem(
-                            child: Text(
-                              '${rate}x',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                            value: rate,
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (double? newValue) {
-                      if (newValue != null) {
-                        context.ytController.setPlaybackRate(newValue);
-                      }
-                    },
-                  );
-                },
+              Expanded(
+                child: Slider(
+                  inactiveColor: Colors.transparent,
+                  value: value.playbackRate,
+                  min: 0.25,
+                  max: 2.0,
+                  divisions: 7,
+                  label: '$v',
+                  onChanged: (double? newValue) {
+                    if (newValue != null) {
+                      v = newValue;
+                      context.ytController.setPlaybackRate(newValue);
+                    }
+                  },
+                ),
               ),
             ],
           ),

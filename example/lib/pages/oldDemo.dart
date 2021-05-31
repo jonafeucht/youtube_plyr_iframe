@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +23,10 @@ class _YoutubeAppDemoState extends State<OldDemo> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: 'PqX1SkYpNJQ',
+      initialVideoId: 'M26V1IWAP-E',
       params: YoutubePlayerParams(
         playlist: [
-          'PqX1SkYpNJQ',
+          'M26V1IWAP-E',
           "MnrJzXM7a6o",
           "FTQbiNvZqaY",
           "iYKXdt0LRs8",
@@ -32,21 +34,20 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
         showFullscreenButton: false,
-        desktopMode: true, // true for youtube design
-        autoPlay: false,
+        desktopMode: false,
+        autoPlay: true,
         enableCaption: true,
         showVideoAnnotations: false,
         enableJavaScript: true,
         privacyEnhanced: true,
         useHybridComposition: true,
-        playsInline: true, // iOS only - Auto fullscreen or not
+        playsInline: true,
       ),
     )..listen((value) {
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
-
-            //..play()
+            ..play()
             ..hideTopMenu();
         }
       });
@@ -121,9 +122,18 @@ class Controls extends StatelessWidget {
           _space,
           SourceInputSection(),
           _space,
-          PlayPauseButtonBar(),
-          _space,
+          PlayPauseButtonBar(), _space,
+          //Removing from iOS until fixed
+          // Builder(
+          //   builder: (BuildContext context) {
+          //     if (!Platform.isIOS) {
+          //       return
           VolumeSlider(),
+          //     } else {
+          //       return SizedBox.shrink();
+          //     }
+          //   },
+          // ),
           _space,
           PlayerStateSection(),
         ],

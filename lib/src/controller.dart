@@ -228,9 +228,7 @@ class YoutubePlayerController extends Stream<YoutubePlayerValue>
 
   /// Sets the volume of player.
   /// Max = 100 , Min = 0
-  void setVolume(int volume) => volume >= 0 && volume <= 100
-      ? invokeJavascript('setVolume($volume)')
-      : throw Exception("Volume should be between 0 and 100");
+  void setVolume(int volume) => invokeJavascript('setVolume($volume)');
 
   /// Seeks to a specified time in the video.
   ///
