@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +31,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         ],
         //startAt: Duration(minutes: 1, seconds: 5),
         showControls: true,
-        showFullscreenButton: false,
+        showFullscreenButton: true,
         desktopMode: false,
         autoPlay: true,
         enableCaption: true,
@@ -44,6 +42,17 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         playsInline: true,
       ),
     )..listen((value) {
+        if (value.playerState == PlayerState.buffering) {
+          String _time(Duration duration) {
+            return "${duration.inMinutes}:${duration.inSeconds}";
+          }
+
+          Future.delayed(Duration(milliseconds: 1000), () {
+            final bufferedTime = _controller.value.position;
+            return print("${_time(bufferedTime)}");
+          });
+        }
+
         if (value.isReady && !value.hasPlayed) {
           _controller
             ..hidePauseOverlay()
