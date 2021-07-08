@@ -1,6 +1,6 @@
 name: youtube_player_iframe_example
 description: Demonstrates how to use the youtube_plyr_iframe plugin.
-version: 2.0.4
+version: 2.0.7
 publish_to: none
 
 environment:

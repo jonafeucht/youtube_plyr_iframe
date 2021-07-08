@@ -1,3 +1,6 @@
+## 2.0.7
+- Fix: [#36](https://github.com/smalldreams/youtube_plyr_iframe/issues/36).
+
 ## 2.0.6
 - Fix: [#32](https://github.com/smalldreams/youtube_plyr_iframe/issues/32).
 
