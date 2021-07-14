@@ -44,33 +44,33 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
       "quality": ThumbnailQuality.standard,
     },
     {
-      "videoID": "bhu0x4hoddA",
+      "videoID": "ZEqba-Bg7Z0",
       "quality": ThumbnailQuality.high,
     },
   ];
-
+  double headerSize = 25;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text("Demo"),
-        centerTitle: true,
-        automaticallyImplyLeading: true,
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.blue,
+      //   title: Text("Demo"),
+      //   centerTitle: true,
+      //   automaticallyImplyLeading: true,
+      //   elevation: 0,
+      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             child: new Center(
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: new Column(
-                  // center the children
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
+              child: Column(
+                // center the children
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(25),
+                    child: Row(
                       children: [
                         ElevatedButton(
                           child: Text("Inline Demo"),
@@ -92,37 +92,102 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                         ),
                       ],
                     ),
-                    Text("Livestream"),
-                    ytPlayer("5qap5aO4i9A"),
-                    Divider(),
-                    Text("Single Player"),
-                    ytPlayer("F1B9Fk_SgI0"),
-                    ytPlayer("KTJQiGRQS8Q"),
-                    Divider(),
-                    Text("From String"),
-                    ytPlayer(videoID),
-                    Divider(),
-                    Text("List View"),
-                    for (var i in players)
-                      ytPlayer(
-                        i["videoID"],
-                      ),
-                    Divider(),
-                    Text("Row List"),
-                    Wrap(
-                      spacing: 8.0,
-                      runSpacing: 4.0,
-                      direction: Axis.horizontal,
-                      children: [
-                        ytPlayer("TyimCGEkiUc"),
-                        Text(
-                          "Hello World",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ],
+                  ),
+                  Text(
+                    "Livestream",
+                    style: TextStyle(fontSize: headerSize),
+                  ),
+                  ytPlayer("5qap5aO4i9A"),
+                  Divider(),
+                  Text(
+                    "Like on dart.dev",
+                    style: TextStyle(fontSize: headerSize),
+                  ),
+                  Container(
+                      height: 300,
+                      width: double.infinity,
+                      color: Colors.blueGrey[900],
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Dart is a client-optimized language for fast apps on any platform",
+                            style: TextStyle(fontSize: 25, color: Colors.white),
+                          ),
+                          SizedBox(height: 20),
+                          TextButton.icon(
+                              onPressed: () => _showDialog(
+                                    context,
+                                    "5F-6n_2XWR8",
+                                  ),
+                              icon: Icon(
+                                Icons.play_circle_fill_outlined,
+                                size: 30,
+                                color: Colors.blue,
+                              ),
+                              label: Text("Watch video")),
+                          SizedBox(height: 20),
+                          Image.network(
+                            "https://dart.dev/assets/dash/2x/supported%20by%20google@2x.png",
+                            width: 200,
+                          ),
+                          SizedBox(height: 20),
+                          TextButton.icon(
+                            onPressed: () => print("here url"),
+                            label: Icon(
+                              Icons.code,
+                              size: 30,
+                              color: Colors.grey,
+                            ),
+                            icon: Text(
+                              "Dart is free and open source",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.grey),
+                            ),
+                          ),
+                        ],
+                      )),
+                  Divider(),
+                  Text(
+                    "Single Player",
+                    style: TextStyle(fontSize: headerSize),
+                  ),
+                  ytPlayer("Vcl2Rje_6w0"),
+                  ytPlayer("F1B9Fk_SgI0"),
+                  Divider(),
+                  Text(
+                    "From String",
+                    style: TextStyle(fontSize: headerSize),
+                  ),
+                  ytPlayer(videoID),
+                  Divider(),
+                  Text(
+                    "List View",
+                    style: TextStyle(fontSize: headerSize),
+                  ),
+                  for (var i in players)
+                    ytPlayer(
+                      i["videoID"],
                     ),
-                  ],
-                ),
+                  Divider(),
+                  Text(
+                    "Row List",
+                    style: TextStyle(fontSize: headerSize),
+                  ),
+                  Wrap(
+                    spacing: 8.0,
+                    runSpacing: 4.0,
+                    direction: Axis.horizontal,
+                    children: [
+                      ytPlayer("TyimCGEkiUc"),
+                      Text(
+                        "Hello World",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
@@ -265,21 +330,24 @@ class _YoutubeViewerState extends State<YoutubeViewer> {
       key: UniqueKey(),
       controller: _controller,
       child: AlertDialog(
-        insetPadding: EdgeInsets.all(10),
-        backgroundColor: Colors.black,
-        content: player,
-        contentPadding: EdgeInsets.all(0),
-        actions: <Widget>[
-          new Center(
-            child: TextButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
+          insetPadding: EdgeInsets.all(10),
+          backgroundColor: Colors.white,
+          content: Container(height: 450, width: 750, child: player),
+          contentPadding: EdgeInsets.all(15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          )
+          // actions: <Widget>[
+          //   new Center(
+          //     child: TextButton(
+          //       child: new Text("Close"),
+          //       onPressed: () {
+          //         Navigator.of(context).pop();
+          //       },
+          //     ),
+          //   ),
+          // ],
           ),
-        ],
-      ),
     );
   }
 }

@@ -50,6 +50,8 @@ class _WebYoutubePlayerState extends State<RawYoutubePlayer> {
     _iFrame = Completer();
     final playerIFrame = IFrameElement()
       ..srcdoc = player
+      ..style.height = "100%"
+      ..style.width = "100%"
       ..style.border = 'none';
     ui.platformViewRegistry.registerViewFactory(
       'youtube-player-${controller.hashCode}',

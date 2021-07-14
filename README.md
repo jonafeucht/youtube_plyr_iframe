@@ -20,9 +20,9 @@ For more details see: [https://pub.dev/packages/youtube_plyr_iframe/install](htt
 
 ---
 
-<img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0"><a href="https://smalldreams.github.io/Web-Example/"><img src="https://i.ibb.co/DrrcRvq/Web-capture-21-2-2021-175044-web-example-starhelix-space.jpg" alt="web" border="0"></a>
+<img src="https://i.ibb.co/gWbwWFn/livestream.png" width=200px alt="livestream" border="0"><img src="https://i.ibb.co/zZw1r2r/youtube.png" width=200px alt="youtube" border="0"><a href="https://smalldreams.github.io/youtube_plyr_iframe/#/"><img src="https://i.ibb.co/DrrcRvq/Web-capture-21-2-2021-175044-web-example-starhelix-space.jpg" alt="web" border="0"></a>
 
-[Click here for WEB DEMO](https://smalldreams.github.io/Web-Example/)
+[Click here for WEB DEMO](https://smalldreams.github.io/youtube_plyr_iframe/#/)
 
 ## Salient Features
 * Inline Playback
