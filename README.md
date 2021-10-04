@@ -189,6 +189,8 @@ playsInline                | Controls whether videos play inline or fullscreen i
 strictRelatedVideos        | Enabling ensure that related videos will come from the same channel as the video that was just played. **Default = false**
 startAt                    | Starts the video at specified time.
 desktopMode                | The controls will be alike Youtube Desktop's controls.
+pointerEvent                | **Default = false**. Disables the interaction with the player.
+
 
 
 ## License

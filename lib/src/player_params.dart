@@ -148,6 +148,9 @@ class YoutubePlayerParams {
   /// as it can cause framerate drops on animations in Android 9 and lower (see [Hybrid-Composition#performance](https://github.com/flutter/flutter/wiki/Hybrid-Composition#performance)).
   final bool useHybridComposition;
 
+  /// Disables all pointer events.
+  final bool? pointerEvent;
+
   /// Defines player parameters for [YoutubePlayer].
   const YoutubePlayerParams({
     this.autoPlay = true,
@@ -171,5 +174,6 @@ class YoutubePlayerParams {
     this.desktopMode = false,
     this.privacyEnhanced = false,
     this.useHybridComposition = true,
+    this.pointerEvent = false,
   });
 }

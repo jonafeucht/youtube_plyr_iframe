@@ -31,7 +31,7 @@ class YoutubePlayerValue {
   final bool hasPlayed;
 
   /// The current position of the video.
-  final Duration position;
+  Duration position;
 
   /// The position up to which the video is buffered.i
   final double buffered;
