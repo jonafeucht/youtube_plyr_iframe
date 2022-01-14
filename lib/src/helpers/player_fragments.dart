@@ -25,18 +25,33 @@ String youtubeIFrameTag(YoutubePlayerController controller) {
     if (controller.params.playlist.isNotEmpty)
       'playlist': '${controller.params.playlist.join(',')}'
   };
+  if (controller.channelId != null) {
+    params['channel'] = controller.channelId as String;
+  }
   final youtubeAuthority = controller.params.privacyEnhanced
       ? 'www.youtube-nocookie.com'
       : 'www.youtube.com';
+  final embedUrl = controller.channelId != null
+      ? 'embed/live_stream'
+      : 'embed/${controller.initialVideoId}';
   final sourceUri = Uri.https(
     youtubeAuthority,
-    'embed/${controller.initialVideoId}',
+    embedUrl,
     params,
   );
-  return '<iframe id="player" type="text/html"'
-      ' style="position:absolute; top:0px; left:0px; bottom:0px; right:10px;'
-      ' width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"'
-      ' src="$sourceUri" frameborder="0" allowfullscreen></iframe>';
+  if (controller.params.pointerEvent == false) {
+    return """
+      <iframe id="player" type="text/html"
+       style="position:absolute; top:0px; left:0px; bottom:0px; right:10px;
+       width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"
+       src="$sourceUri" frameborder="0" allowfullscreen></iframe>""";
+  } else {
+    return """
+      <iframe id="player" type="text/html"
+       style="position:absolute; top:0px; left:0px; bottom:0px; right:10px;
+       width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;pointer-events:none"
+       src="$sourceUri" frameborder="0" allowfullscreen></iframe>""";
+  }
 }
 
 ///
@@ -135,15 +150,20 @@ function hideYoutubeOverlay() {
   return '';
 }
 function hideYoutubeLogo() {
-  try { document.querySelector('#player').contentDocument.querySelector('.ytp-youtube-button').style.display = 'none'; } catch(e) { }
+  try {
+    document.querySelector('#player').contentDocument.querySelector('.ytp-youtube-button').style.display = 'none';
+    document.querySelector('#player').contentDocument.querySelector('.ytp-hide-controls').style.display = 'none';
+    document.querySelector('#player').contentDocument.querySelector('.ytp-mweb-player').style.display = 'none';
+    document.querySelector('#player').contentDocument.querySelector('.ytp-watermark-small').style.display = 'none';
+   } catch(e) { }
   return '';
 }
 function hideEndScreen() {
   try {
-  document.querySelector('#player').contentDocument.querySelector('.ytp-endscreen-content').style.display = 'none';
-  document.querySelector('#player').contentDocument.querySelector('.html5-endscreen').style.display = 'none';
-  document.querySelector('#player').contentDocument.querySelector('.ytp-endscreen-previous').style.display = 'none';
-  document.querySelector('#player').contentDocument.querySelector('.ytp-endscreen-next').style.display = 'none';
+    document.querySelector('#player').contentDocument.querySelector('.ytp-endscreen-content').style.display = 'none';
+    document.querySelector('#player').contentDocument.querySelector('.html5-endscreen').style.display = 'none';
+    document.querySelector('#player').contentDocument.querySelector('.ytp-endscreen-previous').style.display = 'none';
+    document.querySelector('#player').contentDocument.querySelector('.ytp-endscreen-next').style.display = 'none';
   } catch(e) { }
   return '';
 }

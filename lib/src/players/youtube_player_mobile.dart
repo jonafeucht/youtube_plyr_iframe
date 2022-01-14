@@ -125,7 +125,7 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             supportZoom: false,
             disableHorizontalScroll: false,
             disableVerticalScroll: false,
-            useShouldOverrideUrlLoading: true,
+            useShouldOverrideUrlLoading: false,
           ),
           ios: IOSInAppWebViewOptions(
             allowsInlineMediaPlayback: true,
@@ -137,20 +137,6 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
             useHybridComposition: controller.params.useHybridComposition,
           ),
         ),
-        shouldOverrideUrlLoading: (_, detail) async {
-          final uri = detail.request.url;
-          if (uri == null) return NavigationActionPolicy.CANCEL;
-
-          final feature = uri.queryParameters['feature'];
-          if (feature == 'emb_rel_pause') {
-            if (uri.queryParameters.containsKey('v')) {
-              controller.load(uri.queryParameters['v']!);
-            }
-          } else {
-            return NavigationActionPolicy.ALLOW;
-          }
-          return NavigationActionPolicy.CANCEL;
-        },
         onWebViewCreated: (webController) {
           if (!_webController.isCompleted) {
             _webController.complete(webController);
@@ -347,6 +333,6 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
   ''';
 
   String get userAgent => controller.params.desktopMode
-      ? 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'
+      ? 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15'
       : 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148';
 }

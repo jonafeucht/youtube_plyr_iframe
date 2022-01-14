@@ -8,6 +8,7 @@ import '../widgets/play_pause_button_bar.dart';
 import '../widgets/player_state_section.dart';
 import '../widgets/source_input_section.dart';
 import '../widgets/volume_slider.dart';
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 
 class OldDemo extends StatefulWidget {
   @override
@@ -17,20 +18,23 @@ class OldDemo extends StatefulWidget {
 class _YoutubeAppDemoState extends State<OldDemo> {
   late YoutubePlayerController _controller;
 
+  var v;
+  var t;
+
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: 'adB9_iRaldM',
+      initialVideoId: 'TXobm_jJbWM',
       params: YoutubePlayerParams(
         playlist: [
-          'adB9_iRaldM',
+          'TXobm_jJbWM',
           "MnrJzXM7a6o",
           "FTQbiNvZqaY",
           "iYKXdt0LRs8",
         ],
-        //startAt: Duration(minutes: 1, seconds: 5),
-        showControls: true,
+        startAt: Duration(seconds: 33),
+        showControls: false,
         showFullscreenButton: true,
         desktopMode: false,
         autoPlay: true,
@@ -40,8 +44,13 @@ class _YoutubeAppDemoState extends State<OldDemo> {
         privacyEnhanced: true,
         useHybridComposition: true,
         playsInline: true,
+        pointerEvent: true,
       ),
     )..listen((value) {
+        setState(() {
+          v = _controller.value.position;
+          t = _controller.value.metaData.duration;
+        });
         if (value.playerState == PlayerState.buffering) {
           String _time(Duration duration) {
             return "${duration.inMinutes}:${duration.inSeconds}";
@@ -57,6 +66,7 @@ class _YoutubeAppDemoState extends State<OldDemo> {
           _controller
             ..hidePauseOverlay()
             ..play()
+            ..hideYoutubeLogo()
             ..hideTopMenu();
         }
       });
@@ -104,6 +114,26 @@ class _YoutubeAppDemoState extends State<OldDemo> {
             return ListView(
               children: [
                 player,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 35,
+                  ),
+                  child: ProgressBar(
+                    progress: v ?? Duration(minutes: 0),
+                    total: t ?? Duration(minutes: 0),
+                    onSeek: (duration) {
+                      print('User selected a new time: $duration');
+                    },
+                  ),
+                ),
+                // YoutubeValueBuilder(
+                //   builder: (context, value) {
+                //     return ElevatedButton(
+                //         onPressed: () => {context.ytController.setSize()},
+                //         child: Text("HI"));
+                //   },
+                // ),
                 const Controls(),
               ],
             );
@@ -121,32 +151,30 @@ class Controls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _space,
-          MetaDataSection(),
-          _space,
-          SourceInputSection(),
-          _space,
-          PlayPauseButtonBar(), _space,
-          //Removing from iOS until fixed
-          // Builder(
-          //   builder: (BuildContext context) {
-          //     if (!Platform.isIOS) {
-          //       return
-          VolumeSlider(),
-          //     } else {
-          //       return SizedBox.shrink();
-          //     }
-          //   },
-          // ),
-          _space,
-          PlayerStateSection(),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _space,
+        MetaDataSection(),
+        _space,
+        SourceInputSection(),
+        _space,
+        PlayPauseButtonBar(), _space,
+        //Removing from iOS until fixed
+        // Builder(
+        //   builder: (BuildContext context) {
+        //     if (!Platform.isIOS) {
+        //       return
+        VolumeSlider(),
+
+        //     } else {
+        //       return SizedBox.shrink();
+        //     }
+        //   },
+        // ),
+        _space,
+        PlayerStateSection(),
+      ],
     );
   }
 
