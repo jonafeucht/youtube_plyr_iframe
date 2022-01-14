@@ -1,4 +1,5 @@
 # Youtube Plyr IFrame
+## ABANDONED, IN FAVOR OF BETTER IN-HOUSE PACKAGE!
 
 This is a fork of [youtube_player_iframe](https://github.com/sarbagyastha/youtube_player_flutter/tree/master/packages/youtube_player_iframe) which fixes some game breaking things.
 
